@@ -16,8 +16,8 @@ index.html            Markup der App (alle Views)
 css/styles.css        Alle Styles (Desktop + Mobil)
 js/app.js             Bildverarbeitung, Presets, Navigation, UI-Logik
 js/i18n.js            Übersetzungen (DE/EN/ES) und Sprachumschalter
-assets/logo.png       Mero-Diving-Logo (Favicon, Wasserzeichen, kompakter Header)
-assets/header.jpg     Hero-Headerbild mit eingebautem Logo
+assets/logo.png       Mero-Diving-Logo (Header-Overlay, Wasserzeichen)
+assets/header-mobile.jpg  Logofreies Hero-Headerbild
 assets/icon-*.png     App-Icons für PWA-Installation (Manifest + iOS)
 assets/tiles/*.jpg    Banner-Fotos der Startseiten-Kacheln
 assets/spots/*.jpg    Fotos der Tauchplatz-Karten

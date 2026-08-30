@@ -1,5 +1,5 @@
 const $ = id => document.getElementById(id);
-const APP_VERSION = 'v5.7';
+const APP_VERSION = 'v5.8';
 const stage=$('stage'), wrap=$('wrap'), hint=$('hint'), fileIn=$('file');
 const out=$('out'), orig=$('orig');
 const ids=['red','wb','dehaze','bright','sat','sharp'];
@@ -365,9 +365,10 @@ function route(){
 }
 window.addEventListener('hashchange',route);
 route();
-// Logo und Titel im Header führen immer zur Startseite (auch im kompakten
-// Header nach Foto-Upload - dort ist der Zurück-Link längst weggescrollt)
-document.querySelectorAll('.brand img, .brand h1').forEach(el=>{
+// Titel im Header führt immer zur Startseite (auch im kompakten Header nach
+// Foto-Upload - dort ist der Zurück-Link längst weggescrollt); das Logo ist
+// als echter Link (<a href="#home">) im Markup verankert
+document.querySelectorAll('.brand h1').forEach(el=>{
   el.addEventListener('click',()=>{ location.hash='#home'; });
 });
 
