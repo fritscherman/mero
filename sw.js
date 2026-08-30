@@ -2,7 +2,7 @@
 // Precache der App-Shell, danach stale-while-revalidate: offline läuft die
 // zuletzt gecachte Version, online wird der Cache im Hintergrund erneuert.
 // Bei Änderungen an den App-Dateien VERSION hochzählen.
-const VERSION = 'mero-v1';
+const VERSION = 'mero-v2';
 const SHELL = [
   './',
   'index.html',
