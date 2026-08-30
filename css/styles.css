@@ -9,20 +9,24 @@
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
   body{background:var(--ice);color:var(--text);font-family:var(--font-body);font-size:14px;line-height:1.45;min-height:100vh}
-  header{color:var(--white);display:flex;align-items:flex-start;justify-content:space-between;padding:26px 24px 30px;gap:16px;flex-wrap:wrap;
+  header{color:var(--white);display:flex;align-items:flex-end;justify-content:space-between;padding:26px 24px 26px;gap:16px;flex-wrap:wrap;
     border-bottom:4px solid var(--red);
-    background:linear-gradient(180deg,rgba(25,7,88,.18),rgba(25,7,88,.55)),var(--navy) url("../assets/header.jpg") center/cover no-repeat;
+    /* Das Logo ist Teil des Headerfotos (links oben, ca. 19% Breite / 44% Höhe bei
+       cover+left-top). padding-top schiebt den Text darunter – 19vw hält bei
+       breiten Fenstern Abstand zur mitwachsenden Logo-Unterkante. */
+    background:linear-gradient(180deg,rgba(25,7,88,.12) 35%,rgba(25,7,88,.6)),var(--navy) url("../assets/header.jpg") left top/cover no-repeat;
     /* Immer sichtbar (Marke!), inkl. Abstand für Notch/Statusleiste der installierten App */
-    position:sticky;top:0;z-index:30;padding-top:calc(26px + env(safe-area-inset-top));
+    position:sticky;top:0;z-index:30;padding-top:calc(max(120px,19vw) + env(safe-area-inset-top));
     transition:padding .25s ease}
   .brand{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
-  .brand img{width:96px;height:auto;filter:drop-shadow(0 2px 6px rgba(0,0,0,.45));transition:width .25s ease}
+  .brand img{display:none;width:96px;height:auto;filter:drop-shadow(0 2px 6px rgba(0,0,0,.45));transition:width .25s ease}
   h1{font-family:var(--font-display);font-weight:800;font-size:34px;line-height:1.1;letter-spacing:.01em;font-size:clamp(22px,4vw,34px);text-shadow:0 2px 8px rgba(0,0,0,.45)}
   h1 small{display:block;font-family:var(--font-body);font-weight:400;font-size:13px;opacity:.95;letter-spacing:.18em;text-transform:uppercase;margin-top:8px;text-shadow:0 1px 4px rgba(0,0,0,.55)}
-  /* Kompakte Markenleiste beim Scrollen */
-  header.compact{padding:6px 24px;padding-top:calc(6px + env(safe-area-inset-top));align-items:center}
+  /* Kompakte Markenleiste beim Scrollen: schmaler Streifen aus der Bildmitte,
+     das Logo kommt hier als eigenes Bild zurück */
+  header.compact{padding:6px 24px;padding-top:calc(6px + env(safe-area-inset-top));align-items:center;background-position:left 72%}
   header.compact .brand{flex-direction:row;align-items:center}
-  header.compact .brand img{width:44px}
+  header.compact .brand img{display:block;width:44px}
   header.compact h1{display:none}
   header.compact .lang{display:none}
   header.compact p{display:none}
@@ -124,9 +128,8 @@
     .app,.app>*,.card{min-width:0;max-width:100%}
     .stage{width:100%}
     .presets{width:100%}
-    header{padding:18px 14px 20px;gap:8px;padding-top:calc(18px + env(safe-area-inset-top))}
+    header{padding:18px 14px 18px;gap:8px;padding-top:calc(max(120px,19vw) + env(safe-area-inset-top))}
     .brand{gap:10px}
-    .brand img{width:64px}
     h1 small{font-size:10px;margin-top:5px;letter-spacing:.14em}
     header.compact{padding:6px 14px;padding-top:calc(6px + env(safe-area-inset-top))}
     header.compact .brand img{width:40px}
