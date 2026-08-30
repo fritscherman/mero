@@ -1,11 +1,14 @@
   :root{
     /* Mero Diving Cala Ratjada – Markenfarben von mero-diving.com */
-    --navy:#190758; --navy2:#221B40; --red:#E62B39; --gold:#C9A227;
+    --navy:#190758; --navy2:#221B40; --red:#E62B39; --red-deep:#D81F2E; --gold:#C9A227;
     --ice:#EFF4FF; --sky:#E0EFF2; --line:#C9D6E6; --text:#221B40; --muted:#5C6B85; --white:#FFFFFF;
     --font-display:"Roboto Slab","Rockwell",Georgia,serif;
     --font-body:"Roboto",-apple-system,system-ui,sans-serif;
     --font-mono:"Roboto Mono",ui-monospace,monospace;
   }
+  /* Markenschrift selbst gehostet (offline-fähig, wird von sw.js mitgecached) */
+  @font-face{font-family:"Roboto Slab";font-style:normal;font-weight:700;font-display:swap;
+    src:url("../assets/roboto-slab-700.woff2") format("woff2")}
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
   body{background:var(--ice);color:var(--text);font-family:var(--font-body);font-size:14px;line-height:1.45;min-height:100vh}
@@ -20,18 +23,23 @@
     transition:padding .25s ease}
   .brand{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
   .brand img{display:none;width:96px;height:auto;filter:drop-shadow(0 2px 6px rgba(0,0,0,.45));transition:width .25s ease}
-  h1{font-family:var(--font-display);font-weight:800;font-size:34px;line-height:1.1;letter-spacing:.01em;font-size:clamp(22px,4vw,34px);text-shadow:0 2px 8px rgba(0,0,0,.45)}
+  h1{font-family:var(--font-display);font-weight:700;font-size:34px;line-height:1.1;letter-spacing:.01em;font-size:clamp(22px,4vw,34px);text-shadow:0 2px 8px rgba(0,0,0,.45)}
   h1 small{display:block;font-family:var(--font-body);font-weight:400;font-size:13px;opacity:.95;letter-spacing:.18em;text-transform:uppercase;margin-top:8px;text-shadow:0 1px 4px rgba(0,0,0,.55)}
   /* Kompakte Markenleiste beim Scrollen: schmaler Streifen aus der Bildmitte,
      das Logo kommt hier als eigenes Bild zurück */
   header.compact{padding:6px 24px;padding-top:calc(6px + env(safe-area-inset-top));align-items:center;background-position:left 72%}
-  header.compact .brand{flex-direction:row;align-items:center}
+  header.compact .brand{flex-direction:row;align-items:center;flex:1}
   header.compact .brand img{display:block;width:44px}
   header.compact h1{display:none}
-  header.compact .lang{display:none}
+  /* Sprachumschalter bleibt auch kompakt erreichbar (sonst wäre die Sprache
+     nach dem Foto-Upload nicht mehr wechselbar), nur kleiner */
+  header.compact .lang{margin:0 0 0 auto;gap:6px}
+  header.compact .lang button{padding:5px 10px;font-size:11px;border-radius:8px;border-width:1px}
   header.compact p{display:none}
   header p{font-size:12px;opacity:.85;font-family:var(--font-mono)}
-  .app{display:grid;grid-template-columns:1fr 320px;gap:16px;padding:20px 24px 24px;max-width:1500px;margin:0 auto}
+  /* align-items:start: die Bildfläche darf nicht auf die Höhe der Seitenleiste
+     wachsen, sonst liegt der zentrierte "Foto auswählen"-Hinweis unter dem Fold */
+  .app{display:grid;grid-template-columns:1fr 320px;gap:16px;padding:20px 24px 24px;max-width:1500px;margin:0 auto;align-items:start}
   @media(max-width:860px){.app{grid-template-columns:1fr}}
 
   /* Bildbereich */
@@ -45,18 +53,18 @@
   .canvas-wrap canvas{max-width:100%;height:auto;display:block}
   #orig{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--split,50%)) 0 0)}
   .split-line{position:absolute;top:0;bottom:0;left:var(--split,50%);width:2px;background:var(--white);transform:translateX(-1px);cursor:ew-resize}
-  .split-line::after{content:"◀ ▶";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--red);color:var(--white);
+  .split-line::after{content:"◀ ▶";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--red-deep);color:var(--white);
     font-family:var(--font-mono);font-size:10px;padding:6px 8px;border-radius:20px;letter-spacing:2px;white-space:nowrap}
   .tag{position:absolute;top:10px;font-family:var(--font-mono);font-size:11px;padding:4px 8px;border-radius:4px;background:rgba(25,7,88,.75);color:var(--white);letter-spacing:.06em}
-  .tag.l{left:118px}.tag.r{right:10px;background:var(--red)}
+  .tag.l{left:118px}.tag.r{right:10px;background:var(--red-deep)}
 
   /* Steuerung */
   .panel{display:flex;flex-direction:column;gap:14px}
   .card{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:14px;box-shadow:0 2px 10px rgba(25,7,88,.05)}
-  .card h2{font-family:var(--font-display);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--navy);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--gold)}
+  .card h2{font-family:var(--font-display);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--navy);margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid var(--gold)}
   .presets{display:grid;grid-template-columns:1fr 1fr;gap:6px}
   .presets button{background:var(--sky);color:var(--navy);border:1px solid transparent;border-radius:8px;padding:9px 8px;font:500 12px var(--font-body);cursor:pointer;text-align:left}
-  .presets button small{display:block;color:var(--muted);font-family:var(--font-mono);font-size:9.5px;margin-top:2px;font-weight:400}
+  .presets button small{display:block;color:#4A5A75;font-family:var(--font-mono);font-size:10.5px;margin-top:2px;font-weight:400}
   .presets button:hover{border-color:var(--navy)}
   .presets button.on{border-color:var(--red);background:var(--white);box-shadow:inset 0 0 0 1px var(--red)}
   .presets button.wide{grid-column:1/-1}
@@ -68,6 +76,10 @@
   input[type=range]::-webkit-slider-thumb{appearance:none;width:16px;height:16px;border-radius:50%;background:var(--white);border:3px solid var(--navy);cursor:pointer}
   input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px var(--gold)}
   input[type=range].red::-webkit-slider-thumb{border-color:var(--red)}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--white);border:3px solid var(--navy);cursor:pointer;box-sizing:content-box}
+  input[type=range]:focus-visible::-moz-range-thumb{box-shadow:0 0 0 3px var(--gold)}
+  input[type=range].red::-moz-range-thumb{border-color:var(--red)}
+  input[type=range]::-moz-range-track{height:4px;background:var(--line);border-radius:2px}
   .verdict{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;background:var(--sky);font-size:13.5px;font-weight:500;margin-bottom:12px;color:var(--navy)}
   .verdict .dot{width:12px;height:12px;border-radius:50%;background:#B8C4D6;flex:none}
   .verdict.ok{background:#E6F7EF}.verdict.ok .dot{background:#2DA96B}
@@ -87,7 +99,8 @@
   .tip b{color:var(--red)}
   .actions{display:flex;gap:8px;flex-wrap:wrap}
   .btn{flex:1;border:0;border-radius:8px;padding:11px 12px;font:700 13px var(--font-body);cursor:pointer;background:var(--navy);color:var(--white)}
-  .btn.primary{background:var(--red);color:var(--white)}
+  /* Dunkleres Rot überall, wo weißer Text auf Rot liegt (Kontrast ≥ 4.5:1) */
+  .btn.primary{background:var(--red-deep);color:var(--white)}
   .btn:hover{filter:brightness(1.12)}
   .btn:disabled{opacity:.4;cursor:default;filter:none}
   input[type=file]{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
@@ -114,7 +127,7 @@
   .mono{font-family:var(--font-mono)}
   .hold{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);background:rgba(25,7,88,.85);color:#fff;border:1px solid rgba(255,255,255,.35);
     border-radius:20px;padding:9px 16px;font:500 12px var(--font-body);display:none;user-select:none;-webkit-user-select:none;touch-action:manipulation}
-  .hold:active{background:var(--red)}
+  .hold:active{background:var(--red-deep)}
   .bar{display:none}
   .newpic{position:absolute;top:10px;left:10px;z-index:5;background:rgba(255,255,255,.92);color:var(--navy);border:1px solid var(--line);border-radius:20px;padding:7px 12px;font:500 12px var(--font-body);cursor:pointer}
   .newpic:hover{border-color:var(--red)}
@@ -158,6 +171,8 @@
     .ctl label output{font-size:13px}
     input[type=range]{height:8px;border-radius:4px}
     input[type=range]::-webkit-slider-thumb{width:28px;height:28px;border-width:4px}
+    input[type=range]::-moz-range-thumb{width:28px;height:28px;border-width:4px}
+    input[type=range]::-moz-range-track{height:8px;border-radius:4px}
     .card{padding:14px 14px 8px}
     .actions.desk{display:none}
     .bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));
@@ -209,5 +224,5 @@
   .lang button{background:rgba(25,7,88,.45);color:var(--white);opacity:.85;border:1.5px solid rgba(255,255,255,.4);border-radius:10px;
     padding:9px 16px;font:700 14px var(--font-body);cursor:pointer;letter-spacing:.06em;transition:all .15s}
   .lang button:hover{opacity:1;border-color:var(--white)}
-  .lang button.on{opacity:1;background:var(--red);border-color:var(--red)}
+  .lang button.on{opacity:1;background:var(--red-deep);border-color:var(--red-deep)}
 
