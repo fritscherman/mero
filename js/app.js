@@ -1,5 +1,5 @@
 const $ = id => document.getElementById(id);
-const APP_VERSION = 'v5.0';
+const APP_VERSION = 'v5.1';
 const stage=$('stage'), wrap=$('wrap'), hint=$('hint'), fileIn=$('file');
 const out=$('out'), orig=$('orig');
 const ids=['red','wb','dehaze','bright','sat','sharp'];
@@ -339,6 +339,7 @@ window.addEventListener('load', () => window.scrollTo(0, 0));
 // Sprachwechsel: von i18n.js ausgelöst - dynamische Texte nachziehen
 document.addEventListener('langchange', () => {
   renderSpots();
+  renderPacking();
   if (!fullImg) $('meta').textContent = APP_VERSION + ' · ' + t('meta.empty');
   if (!previewData) $('verdict-text').textContent = t('check.initial');
   holdBtn.textContent = t('hold.idle');
@@ -354,7 +355,7 @@ document.addEventListener('langchange', () => {
 
 // ---------- Navigation: Startseite / MeroColor / Tauchplätze / Kontakt ----------
 // Hash-Routing, damit die Zurück-Taste (Browser & Android) funktioniert
-const VIEW_IDS=['home','editor','spots','contact'];
+const VIEW_IDS=['home','editor','spots','packing','safety','contact'];
 function route(){
   let v=(location.hash||'').replace('#','');
   if(!VIEW_IDS.includes(v)) v='home';
@@ -378,4 +379,24 @@ renderSpots();
 $('spots-list').addEventListener('click',e=>{
   const b=e.target.closest('button[data-site]');
   if(b){ applyPreset(b.dataset.site); location.hash='#editor'; }
+});
+
+// Packliste: Haken bleiben lokal gespeichert (localStorage), pro Eintrag ein Schlüssel
+const PACK_KEYS=['brevet','attest','swim','sun','water','mask','fins','suit','computer','camera'];
+function packState(){ try{return JSON.parse(localStorage.getItem('mero-packing')||'{}')}catch(e){return {}} }
+function renderPacking(){
+  const s=packState();
+  $('pack-list').innerHTML=PACK_KEYS.map(k=>
+    `<label class="pack-item"><input type="checkbox" data-pack="${k}"${s[k]?' checked':''}><span>${t('pack.'+k)}</span></label>`
+  ).join('');
+}
+renderPacking();
+$('pack-list').addEventListener('change',e=>{
+  const c=e.target.closest('input[data-pack]'); if(!c) return;
+  const s=packState(); s[c.dataset.pack]=c.checked;
+  try{localStorage.setItem('mero-packing',JSON.stringify(s))}catch(err){}
+});
+$('pack-reset').addEventListener('click',()=>{
+  try{localStorage.removeItem('mero-packing')}catch(err){}
+  renderPacking();
 });

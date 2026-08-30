@@ -35,6 +35,8 @@
   <nav class="tiles">
     <a class="tile" href="#editor"><span class="ic">📷</span><h3 id="tile-editor-t">MeroColor – Bildoptimierer</h3><p id="tile-editor-s">Tauchfotos direkt im Browser aufbereiten: Rot zurückholen, Trübung entfernen, Mero-Branding.</p></a>
     <a class="tile" href="#spots"><span class="ic">🤿</span><h3 id="tile-spots-t">Tauchplätze</h3><p id="tile-spots-s">Unsere Spots rund um Cala Ratjada – Buchten, Bootsplätze, Grotten und Höhlen.</p></a>
+    <a class="tile" href="#packing"><span class="ic">🎒</span><h3 id="tile-pack-t">Packliste</h3><p id="tile-pack-s">Zum Abhaken vor dem Tauchgang – merkt sich deine Haken.</p></a>
+    <a class="tile" href="#safety"><span class="ic">🚨</span><h3 id="tile-safety-t">Notfall &amp; Sicherheit</h3><p id="tile-safety-s">Notrufnummern zum Antippen – auch offline.</p></a>
     <a class="tile" href="#contact"><span class="ic">📍</span><h3 id="tile-contact-t">Kontakt &amp; Anfahrt</h3><p id="tile-contact-s">Adresse der Tauchbasis, Karte und Website.</p></a>
     <a class="tile" href="https://www.mero-diving.com" target="_blank" rel="noopener"><span class="ic">🌐</span><h3>mero-diving.com</h3><p id="tile-web-s">Kurse, Preise und Buchung auf unserer Website.</p></a>
   </nav>
@@ -64,6 +66,30 @@
       <a class="btn ghost" href="https://maps.google.com/?q=Mero+Diving+Cala+Ratjada" target="_blank" rel="noopener" id="contact-maps">In Google Maps öffnen</a>
     </div>
     <p class="tiny" id="contact-note">Kurse, Preise und Buchung findest du auf mero-diving.com.</p>
+  </div>
+</section>
+
+<section id="view-packing" class="page" hidden>
+  <a class="back" href="#home">← Startseite</a>
+  <h2 class="page-h" id="pack-h">Packliste</h2>
+  <p class="page-intro" id="pack-intro">Leihausrüstung bekommst du bei uns an der Basis – das hier ist deine persönliche Liste. Die Haken bleiben auf deinem Gerät gespeichert.</p>
+  <div class="card">
+    <div id="pack-list" class="pack-list"></div>
+    <button class="btn ghost sm" id="pack-reset" type="button">Alle Haken zurücksetzen</button>
+  </div>
+</section>
+
+<section id="view-safety" class="page" hidden>
+  <a class="back" href="#home">← Startseite</a>
+  <h2 class="page-h" id="safety-h">Notfall &amp; Sicherheit</h2>
+  <div class="card">
+    <p id="safety-intro">Im Notfall zuerst Guide oder Basis informieren. Diese Nummern funktionieren auch offline in der App:</p>
+    <p class="contact-lines">
+      <a href="tel:112">🚨 <span id="safety-112">Notruf (europaweit)</span>: 112</a><br>
+      <a href="tel:+390642115685">🩺 <span id="safety-dan">DAN Europe Taucher-Hotline (24h)</span>: +39 06 4211 5685</a><br>
+      <a href="tel:+34689448308">🤿 <span id="safety-base">Mero Diving Basis</span>: +34 689 448 308</a>
+    </p>
+    <p class="tiny" id="safety-note">Unwohl nach dem Tauchgang? Melde dich sofort bei uns – lieber einmal zu viel als einmal zu wenig.</p>
   </div>
 </section>
 
