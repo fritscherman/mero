@@ -247,3 +247,12 @@ new MutationObserver(()=>{$('reset2').disabled=$('reset').disabled;}).observe($(
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
 }
+
+// Header bleibt sichtbar: tatsächliche Höhe messen (für den Sticky-Abstand des
+// Bildbereichs) und die App immer oben starten lassen.
+const headerEl = document.querySelector('header');
+function setHeaderH(){ document.documentElement.style.setProperty('--header-h', headerEl.offsetHeight + 'px'); }
+setHeaderH();
+window.addEventListener('resize', setHeaderH);
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.addEventListener('load', () => window.scrollTo(0, 0));

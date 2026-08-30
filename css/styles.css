@@ -10,7 +10,9 @@
   html,body{height:100%}
   body{background:var(--ice);color:var(--text);font-family:var(--font-body);font-size:14px;line-height:1.45;min-height:100vh}
   header{background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:space-between;padding:12px 24px;gap:16px;flex-wrap:wrap;
-    border-bottom:4px solid var(--red)}
+    border-bottom:4px solid var(--red);
+    /* Immer sichtbar (Marke!), inkl. Abstand für Notch/Statusleiste der installierten App */
+    position:sticky;top:0;z-index:30;padding-top:calc(12px + env(safe-area-inset-top))}
   .brand{display:flex;align-items:center;gap:14px}
   .brand img{width:64px;height:auto;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
   h1{font-family:var(--font-display);font-weight:800;font-size:22px;line-height:1.1;letter-spacing:.01em}
@@ -113,13 +115,17 @@
     .app,.app>*,.card{min-width:0;max-width:100%}
     .stage{width:100%}
     .presets{width:100%}
-    header{padding:8px 14px;gap:8px}
+    header{padding:8px 14px;gap:8px;padding-top:calc(8px + env(safe-area-inset-top))}
     .brand img{width:40px}
     h1{font-size:17px}
     h1 small{font-size:10px;margin-top:1px}
     header p{display:none}
-    .app{padding:10px 12px 12px;gap:12px}
-    .stage{position:sticky;top:0;z-index:20;min-height:0;max-height:44vh;background:var(--navy);border-radius:10px}
+    /* Blocklayout statt Grid: nur so kann der Bildbereich über die ganze
+       Seitenhöhe sticky unter dem Header bleiben (Grid-Items kleben nur
+       innerhalb ihrer eigenen Grid-Zelle) */
+    .app{display:block;padding:10px 12px 12px}
+    .app>*+*{margin-top:12px}
+    .stage{position:sticky;top:var(--header-h,58px);z-index:20;min-height:0;max-height:44vh;background:var(--navy);border-radius:10px}
     .stage.empty{max-height:none;min-height:300px;background:var(--sky)}
     .canvas-wrap{max-height:44vh}
     .canvas-wrap canvas{max-height:44vh;width:auto;max-width:100%;object-fit:contain}
