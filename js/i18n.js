@@ -171,7 +171,7 @@ const I18N_MAP = {
   '.wm-row>span':'wm.label',
   '.bar-row:nth-of-type(1) .bar-name':'bar.r','.bar-row:nth-of-type(2) .bar-name':'bar.g','.bar-row:nth-of-type(3) .bar-name':'bar.b',
   '.legend':'legend',
-  '.actions label[for=file]':'act.new','#reset':'act.reset','#reset2':'act.reset',
+  '.actions label[for=file]':'act.new','#reset':'act.reset','#reset2':'act.reset','#save':'act.save','#save2':'act.save2',
   '#ov p':'ov.text','#ovdl':'ov.dl','#ovclose':'ov.close',
   '.update-toast>span':'upd.text','#update-btn':'upd.btn',
   '#install-btn':'inst.btn',
