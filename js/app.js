@@ -242,3 +242,8 @@ $('reset2').addEventListener('click',()=>$('reset').click());
 new MutationObserver(()=>{$('save2').disabled=$('save').disabled;$('reset2').disabled=$('reset').disabled;$('save2').textContent=$('save').textContent.replace('Foto speichern','Speichern');})
   .observe($('save'),{attributes:true,childList:true,characterData:true,subtree:true});
 new MutationObserver(()=>{$('reset2').disabled=$('reset').disabled;}).observe($('reset'),{attributes:true});
+
+// PWA: Service Worker registrieren (relativ, damit es unter /mero/ funktioniert)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
