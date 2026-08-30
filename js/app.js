@@ -1,5 +1,5 @@
 const $ = id => document.getElementById(id);
-const APP_VERSION = 'v4.0';
+const APP_VERSION = 'v4.1';
 const stage=$('stage'), wrap=$('wrap'), hint=$('hint'), fileIn=$('file');
 const out=$('out'), orig=$('orig'), hist=$('hist');
 const ids=['red','wb','dehaze','bright','sat','sharp'];

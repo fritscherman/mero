@@ -205,9 +205,12 @@
   }
   @keyframes swipe-nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
 
-  /* Sprachumschalter im Header */
-  .lang{display:flex;gap:4px}
-  .lang button{background:transparent;color:var(--white);opacity:.6;border:1px solid rgba(255,255,255,.35);border-radius:6px;
-    padding:5px 9px;font:700 11px var(--font-mono);cursor:pointer;letter-spacing:.05em}
-  .lang button:hover{opacity:1}
+  /* Sprachumschalter: Pills im Hero unter dem Untertitel */
+  .lang{display:flex;gap:10px;margin-top:6px}
+  .lang button{background:rgba(25,7,88,.45);color:var(--white);opacity:.85;border:1.5px solid rgba(255,255,255,.4);border-radius:10px;
+    padding:9px 16px;font:700 14px var(--font-body);cursor:pointer;letter-spacing:.06em;transition:all .15s}
+  .lang button:hover{opacity:1;border-color:var(--white)}
   .lang button.on{opacity:1;background:var(--red);border-color:var(--red)}
+  /* Kompakt: kleinere Pills in der Zeile */
+  header.compact .lang{margin-top:0;gap:6px}
+  header.compact .lang button{padding:5px 10px;font-size:11px;border-radius:7px}
