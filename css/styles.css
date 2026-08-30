@@ -189,3 +189,10 @@
     }
   }
   @keyframes swipe-nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+
+  /* Sprachumschalter im Header */
+  .lang{display:flex;gap:4px}
+  .lang button{background:transparent;color:var(--white);opacity:.6;border:1px solid rgba(255,255,255,.35);border-radius:6px;
+    padding:5px 9px;font:700 11px var(--font-mono);cursor:pointer;letter-spacing:.05em}
+  .lang button:hover{opacity:1}
+  .lang button.on{opacity:1;background:var(--red);border-color:var(--red)}
