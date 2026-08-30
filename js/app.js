@@ -1,4 +1,5 @@
 const $ = id => document.getElementById(id);
+const APP_VERSION = 'v3.5';
 const stage=$('stage'), wrap=$('wrap'), hint=$('hint'), fileIn=$('file');
 const out=$('out'), orig=$('orig'), hist=$('hist');
 const ids=['red','wb','dehaze','bright','sat','sharp'];
@@ -262,6 +263,34 @@ if ('serviceWorker' in navigator) {
   $('update-btn').addEventListener('click', () => location.reload());
   $('update-close').addEventListener('click', () => $('update').hidden = true);
 }
+
+// Sichtbare Version: Kopfzeile (Desktop) und Footer (überall)
+$('meta').textContent = APP_VERSION + ' · ' + $('meta').textContent;
+$('version').textContent = 'Tauchfoto Enhancer ' + APP_VERSION;
+
+// Installations-Hinweis: nur im Browser (nicht in der installierten App),
+// merkt sich das Wegklicken. Android zeigt einen echten Installieren-Button
+// (beforeinstallprompt); iOS kennt keinen Prompt, dort gibt es die Anleitung
+// über das Teilen-Menü.
+(function(){
+  const standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  let off = false; try { off = localStorage.getItem('mero-install-hint') === 'off'; } catch(e) {}
+  if (standalone || off) return;
+  const el = $('install');
+  let deferred = null;
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault(); deferred = e;
+    $('install-text').textContent = 'Als App installieren – mit eigenem Icon und offline nutzbar.';
+    $('install-btn').hidden = false; el.hidden = false;
+  });
+  const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (isIOS) {
+    $('install-text').innerHTML = 'Als App aufs iPhone: <b>Teilen-Symbol</b> (Quadrat mit Pfeil) antippen → <b>„Zum Home-Bildschirm“</b>. Läuft dann auch offline.';
+    el.hidden = false;
+  }
+  $('install-btn').addEventListener('click', () => { if (deferred) { deferred.prompt(); deferred = null; } el.hidden = true; });
+  $('install-close').addEventListener('click', () => { el.hidden = true; try { localStorage.setItem('mero-install-hint', 'off'); } catch(e) {} });
+})();
 
 // Header bleibt sichtbar: tatsächliche Höhe messen (für den Sticky-Abstand des
 // Bildbereichs) und die App immer oben starten lassen.

@@ -13,7 +13,9 @@ assets/logo.png       Mero-Diving-Logo (Header, Favicon, Wasserzeichen)
 
 ## PWA
 
-Die App ist als Progressive Web App installierbar („Zum Home-Bildschirm hinzufügen“ bzw. Installieren-Symbol im Browser) und funktioniert danach auch offline – z. B. auf dem Boot ohne Empfang. `manifest.webmanifest` beschreibt die App (Name, Icons, Farben), `sw.js` cached die App-Dateien und aktualisiert sie im Hintergrund, sobald wieder Netz da ist. Nach Änderungen an den App-Dateien die `VERSION`-Konstante in `sw.js` hochzählen, damit installierte Geräte den neuen Stand laden.
+Die App ist als Progressive Web App installierbar und funktioniert danach auch offline – z. B. auf dem Boot ohne Empfang. Auf Android erscheint dafür ein „Installieren“-Button, auf dem iPhone gibt es keinen automatischen Dialog (Apple erlaubt das nicht) – dort zeigt die App eine Anleitung: Teilen-Symbol → „Zum Home-Bildschirm“. `manifest.webmanifest` beschreibt die App (Name, Icons, Farben), `sw.js` lädt online immer den neuesten Stand und cached ihn für den Offline-Betrieb.
+
+Nach Änderungen an den App-Dateien zwei Versionsnummern hochzählen: `APP_VERSION` in `js/app.js` (sichtbar in Kopfzeile und Footer) und `VERSION` in `sw.js` (löst auf installierten Geräten den „Aktualisieren“-Hinweis aus).
 
 ## Lokal starten
 
