@@ -20,7 +20,7 @@ assets/logo.png       Mero-Diving-Logo (Favicon, Wasserzeichen, kompakter Header
 assets/header.jpg     Hero-Headerbild mit eingebautem Logo
 assets/icon-*.png     App-Icons für PWA-Installation (Manifest + iOS)
 assets/tiles/*.jpg    Banner-Fotos der Startseiten-Kacheln
-assets/spots/*.jpg    Fotos der Tauchplatz-Karten
+assets/spots/*.jpg    Fotos der Tauchplatz-Karten (echte Fotos von mero-diving.com/tauchen, 880×495)
 ```
 
 ## PWA
