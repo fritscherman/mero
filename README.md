@@ -8,7 +8,10 @@ Web-App zum Aufbereiten von Tauchfotos direkt im Browser – Rotkanal zurückhol
 index.html            Markup der App
 css/styles.css        Alle Styles (Desktop + Mobil)
 js/app.js             Bildverarbeitung, Presets, UI-Logik
-assets/logo.png       Mero-Diving-Logo (Header, Favicon, Wasserzeichen)
+js/i18n.js            Übersetzungen (DE/EN/ES) und Sprachumschalter
+assets/logo.png       Mero-Diving-Logo (Favicon, Wasserzeichen, kompakter Header)
+assets/header.jpg     Hero-Headerbild mit eingebautem Logo
+assets/icon-*.png     App-Icons für PWA-Installation (Manifest + iOS)
 ```
 
 ## PWA

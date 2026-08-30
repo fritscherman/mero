@@ -1,7 +1,7 @@
 const $ = id => document.getElementById(id);
-const APP_VERSION = 'v4.4';
+const APP_VERSION = 'v4.5';
 const stage=$('stage'), wrap=$('wrap'), hint=$('hint'), fileIn=$('file');
-const out=$('out'), orig=$('orig'), hist=$('hist');
+const out=$('out'), orig=$('orig');
 const ids=['red','wb','dehaze','bright','sat','sharp'];
 const PRESETS={
   // --- Tauchplätze (Quelle: mero-diving.com/tauchen) ---
@@ -43,6 +43,9 @@ function load(file){
   const show=err=>{const b=$('err');b.style.display='block';b.textContent=err;};
   const done=img=>{
     if(!img||!img.width){show(t('err.decode')+' ('+(file.type||t('err.format'))+').');return;}
+    // Altes ImageBitmap freigeben, sonst sammelt sich bei mehreren großen Fotos
+    // Speicher an (v.a. iOS Safari)
+    if(fullImg&&typeof fullImg.close==='function'){try{fullImg.close();}catch(e){}}
     fullImg=img;
     const s=Math.min(1,MAXP/Math.max(img.width,img.height));
     const w=Math.round(img.width*s), h=Math.round(img.height*s);
@@ -144,7 +147,7 @@ function drawHist(d){
   [['r',a.r,o.r],['g',a.g,o.g],['b',a.b,o.b]].forEach(([k,v,ov])=>{
     $('b-'+k).style.width=pct(v)+'%'; $('g-'+k).style.left=pct(ov)+'%'; $('v-'+k).textContent=pct(v)+' %';
   });
-  const ratio=a.r/((a.g+a.b)/2), blue=a.b/Math.max(1,a.r);
+  const ratio=a.r/Math.max(1,(a.g+a.b)/2), blue=a.b/Math.max(1,a.r);
   const vd=$('verdict'), vt=$('verdict-text'), tip=$('tip');
   vd.className='verdict';
   if(ratio<0.6){ vd.classList.add('bad'); vt.textContent=t('v.bad'); tip.innerHTML=t('tip.bad'); }
@@ -231,16 +234,21 @@ $('save').addEventListener('click',async()=>{
   if($('wm').checked) watermark(ctx,c.width,c.height);
   const dataUrl=c.toDataURL('image/jpeg',0.94);
   btn.disabled=false; btn.textContent=t('act.save');
+  // Eindeutiger Dateiname pro Speichern, damit mehrere Fotos sich nicht überschreiben
+  const dt=new Date(), p2=n=>String(n).padStart(2,'0');
+  const fname=`mero-diving-${dt.getFullYear()}-${p2(dt.getMonth()+1)}-${p2(dt.getDate())}-${p2(dt.getHours())}${p2(dt.getMinutes())}${p2(dt.getSeconds())}.jpg`;
   // 1) Share-Sheet
   try{
     const blob=await (await fetch(dataUrl)).blob();
-    const f=new File([blob],'mero-diving-tauchfoto.jpg',{type:'image/jpeg'});
+    const f=new File([blob],fname,{type:'image/jpeg'});
     if(navigator.canShare&&navigator.canShare({files:[f]})){ await navigator.share({files:[f],title:'Mero Diving Tauchfoto'}); return; }
   }catch(e){ if(e&&e.name==='AbortError') return; }
   // 2)+3) Overlay mit Bild (Gedrückthalten) und Download-Link
-  $('ovimg').src=dataUrl; $('ovdl').href=dataUrl; $('ov').classList.add('on');
+  $('ovimg').src=dataUrl; $('ovdl').href=dataUrl; $('ovdl').download=fname; $('ov').classList.add('on');
 });
 $('ovclose').addEventListener('click',()=>$('ov').classList.remove('on'));
+$('ov').addEventListener('click',e=>{ if(e.target===e.currentTarget) $('ov').classList.remove('on'); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') $('ov').classList.remove('on'); });
 
 // Mobil: Original per Gedrückthalten zeigen
 const holdBtn=$('hold');
@@ -248,7 +256,13 @@ const showOrig=on=>{ wrapEl.style.setProperty('--split',on?'100%':'0%'); holdBtn
 ['pointerdown','touchstart'].forEach(ev=>holdBtn.addEventListener(ev,e=>{e.preventDefault();e.stopPropagation();showOrig(true);},{passive:false}));
 ['pointerup','pointercancel','pointerleave','touchend','touchcancel'].forEach(ev=>holdBtn.addEventListener(ev,e=>{e.stopPropagation();showOrig(false);}));
 holdBtn.addEventListener('contextmenu',e=>e.preventDefault());
-if(window.matchMedia('(max-width:860px)').matches) wrapEl.style.setProperty('--split','0%');
+// Split-Grundstellung passend zum Layout - auch nach einem Wechsel der
+// Fenstergröße (sonst bliebe der Schieber nach Mobil→Desktop bei 0 % hängen)
+const mobileMq=window.matchMedia('(max-width:860px)');
+const applySplitDefault=()=>wrapEl.style.setProperty('--split',mobileMq.matches?'0%':'50%');
+if(mobileMq.addEventListener) mobileMq.addEventListener('change',applySplitDefault);
+else if(mobileMq.addListener) mobileMq.addListener(applySplitDefault);
+applySplitDefault();
 
 // Bottom-Bar spiegelt die Desktop-Buttons
 $('save2').addEventListener('click',()=>$('save').click());
@@ -280,6 +294,8 @@ if ('serviceWorker' in navigator) {
 // Sichtbare Version: Kopfzeile (Desktop) und Footer (überall)
 $('meta').textContent = APP_VERSION + ' · ' + t('meta.empty');
 $('version').textContent = 'Mero Dive Pictures ' + APP_VERSION;
+// Farbcheck-Starttext in der erkannten Sprache (im HTML steht Deutsch)
+$('verdict-text').textContent = t('check.initial');
 
 // Installations-Hinweis: nur im Browser (nicht in der installierten App),
 // merkt sich das Wegklicken. Android zeigt einen echten Installieren-Button
