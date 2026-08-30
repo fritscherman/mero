@@ -243,9 +243,24 @@ new MutationObserver(()=>{$('save2').disabled=$('save').disabled;$('reset2').dis
   .observe($('save'),{attributes:true,childList:true,characterData:true,subtree:true});
 new MutationObserver(()=>{$('reset2').disabled=$('reset').disabled;}).observe($('reset'),{attributes:true});
 
-// PWA: Service Worker registrieren (relativ, damit es unter /mero/ funktioniert)
+// PWA: Service Worker registrieren (relativer Pfad, damit es unter /mero/
+// funktioniert). Nach einem Deployment wird die neue Version im Hintergrund
+// installiert; sobald sie übernommen hat, blendet die Seite einen
+// "Aktualisieren"-Hinweis ein statt mitten in der Bearbeitung neu zu laden.
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  const hadController = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (hadController) $('update').hidden = false;
+  });
+  window.addEventListener('load', async () => {
+    try {
+      const reg = await navigator.serviceWorker.register('sw.js', {updateViaCache: 'none'});
+      // Beim Zurückkehren in die installierte App aktiv nach Updates suchen
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) reg.update(); });
+    } catch (e) { /* offline oder nicht unterstützt */ }
+  });
+  $('update-btn').addEventListener('click', () => location.reload());
+  $('update-close').addEventListener('click', () => $('update').hidden = true);
 }
 
 // Header bleibt sichtbar: tatsächliche Höhe messen (für den Sticky-Abstand des
