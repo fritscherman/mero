@@ -1,5 +1,5 @@
 const $ = id => document.getElementById(id);
-const APP_VERSION = 'v5.3';
+const APP_VERSION = 'v5.4';
 const stage=$('stage'), wrap=$('wrap'), hint=$('hint'), fileIn=$('file');
 const out=$('out'), orig=$('orig');
 const ids=['red','wb','dehaze','bright','sat','sharp'];
@@ -365,6 +365,11 @@ function route(){
 }
 window.addEventListener('hashchange',route);
 route();
+// Logo und Titel im Header führen immer zur Startseite (auch im kompakten
+// Header nach Foto-Upload - dort ist der Zurück-Link längst weggescrollt)
+document.querySelectorAll('.brand img, .brand h1').forEach(el=>{
+  el.addEventListener('click',()=>{ location.hash='#home'; });
+});
 
 // Tauchplatz-Seite aus den i18n-Daten aufbauen (bei Sprachwechsel neu)
 const SITE_KEYS=['lliteras','maria','kkaese','capfreu','gkaese','leuchtturm','loewenkopf','kathedrale'];

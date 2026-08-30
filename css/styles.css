@@ -294,3 +294,7 @@
     header{padding-top:calc(16px + env(safe-area-inset-top));background-position:68% top}
     .brand img{display:block;width:72px}
   }
+
+  /* Header-Logo/-Titel und Bottom-Bar-Home führen zur Startseite */
+  .brand img,.brand h1{cursor:pointer}
+  a.btn{text-decoration:none}
