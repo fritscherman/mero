@@ -285,13 +285,14 @@
   .pack-item input{width:20px;height:20px;accent-color:var(--red-deep);flex:none;cursor:pointer}
   .pack-item input:checked+span{color:var(--muted);text-decoration:line-through}
 
-  /* Schmale Handys: Bildausschnitt nach links schieben, damit Taucher und
-     Felswand (rechte Bildhälfte) sichtbar werden. Das ins Foto eingebaute Logo
-     wandert dabei aus dem Bild - deshalb zeigt der Hero hier das eigene
-     Logo-Bild. Ab Tablet-Breite ist das Foto fast komplett zu sehen,
-     dort bleibt alles beim Alten. */
+  /* Schmale Handys: logofreie Variante des Headerfotos (rechte Bildhälfte mit
+     Taucher und Felswand), damit nie das eingebaute UND das Overlay-Logo
+     gleichzeitig zu sehen sind - der Beschnitt hängt sonst von der exakten
+     Headerhöhe des Geräts ab. Ab Tablet-Breite bleibt das Originalfoto. */
   @media(max-width:560px){
-    header{padding-top:calc(16px + env(safe-area-inset-top));background-position:68% top}
+    header{padding-top:calc(16px + env(safe-area-inset-top));
+      background-image:linear-gradient(180deg,rgba(25,7,88,.12) 35%,rgba(25,7,88,.6)),url("../assets/header-mobile.jpg");
+      background-position:right top}
     .brand img{display:block;width:72px}
   }
 
