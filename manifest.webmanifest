@@ -1,7 +1,7 @@
 {
-  "name": "Mero Diving · Tauchfoto Enhancer",
-  "short_name": "Mero Fotos",
-  "description": "Tauchfotos direkt im Browser aufbereiten – Rot zurückholen, Weißabgleich, Trübung entfernen. Verarbeitung bleibt lokal auf dem Gerät.",
+  "name": "Mero Dive Pictures",
+  "short_name": "Mero Pictures",
+  "description": "Enhance your dive photos right in the browser – restore red, fix white balance, remove haze. Everything stays on your device.",
   "lang": "de",
   "start_url": "./",
   "scope": "./",

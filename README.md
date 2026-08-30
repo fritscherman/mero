@@ -23,4 +23,4 @@ Einfach `index.html` im Browser öffnen – es wird kein Build-Schritt und kein 
 
 ## Hosting (GitHub Pages)
 
-GitHub Pages ist unter **Settings → Pages** mit Source „Deploy from a branch“ (`main`, Root) konfiguriert. Jeder Push auf `main` wird von GitHub automatisch deployt; die Seite ist unter <https://fritscherman.github.io/mero/> erreichbar. Die Datei `.nojekyll` verhindert dabei eine unnötige Jekyll-Verarbeitung.
+Der Workflow `.github/workflows/pages.yml` deployt bei jedem Push auf `main` (und manuell über *Actions → Deploy to GitHub Pages → Run workflow*) auf GitHub Pages; die Seite ist unter <https://fritscherman.github.io/mero/> erreichbar. Voraussetzung: Unter **Settings → Pages** muss als Source **„GitHub Actions“** gewählt sein.

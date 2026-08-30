@@ -1,5 +1,5 @@
 const $ = id => document.getElementById(id);
-const APP_VERSION = 'v3.5';
+const APP_VERSION = 'v3.7';
 const stage=$('stage'), wrap=$('wrap'), hint=$('hint'), fileIn=$('file');
 const out=$('out'), orig=$('orig'), hist=$('hist');
 const ids=['red','wb','dehaze','bright','sat','sharp'];
@@ -42,7 +42,7 @@ function load(file){
   // Kein blob:-URL (wird in Sandboxes oft blockiert): erst createImageBitmap, sonst FileReader → data-URL
   const show=err=>{const b=$('err');b.style.display='block';b.textContent=err;};
   const done=img=>{
-    if(!img||!img.width){show('Bild konnte nicht dekodiert werden ('+(file.type||'unbekanntes Format')+').');return;}
+    if(!img||!img.width){show(t('err.decode')+' ('+(file.type||t('err.format'))+').');return;}
     fullImg=img;
     const s=Math.min(1,MAXP/Math.max(img.width,img.height));
     const w=Math.round(img.width*s), h=Math.round(img.height*s);
@@ -60,8 +60,8 @@ function load(file){
   };
   const viaReader=()=>{
     const r=new FileReader();
-    r.onload=()=>{const img=new Image(); img.onload=()=>done(img); img.onerror=()=>show('Bild konnte nicht gelesen werden ('+(file.type||'unbekanntes Format')+'). HEIC bitte vorher als JPG exportieren.'); img.src=r.result;};
-    r.onerror=()=>show('Datei konnte nicht gelesen werden.');
+    r.onload=()=>{const img=new Image(); img.onload=()=>done(img); img.onerror=()=>show(t('err.read')+' ('+(file.type||t('err.format'))+'). '+t('err.heic')); img.src=r.result;};
+    r.onerror=()=>show(t('err.file'));
     r.readAsDataURL(file);
   };
   if(window.createImageBitmap){
@@ -145,14 +145,10 @@ function drawHist(d){
   const ratio=a.r/((a.g+a.b)/2), blue=a.b/Math.max(1,a.r);
   const vd=$('verdict'), vt=$('verdict-text'), tip=$('tip');
   vd.className='verdict';
-  if(ratio<0.6){ vd.classList.add('bad'); vt.textContent='Starker Blaustich – Rot fehlt noch fast komplett.';
-    tip.innerHTML='Schiebe <b>Rot zurückholen</b> deutlich nach rechts, dann den Weißabgleich nachziehen.'; }
-  else if(ratio<0.8){ vd.classList.add('warn'); vt.textContent='Noch etwas kühl – die Farben wirken flach.';
-    tip.innerHTML='Ein Stück mehr <b>Rot zurückholen</b> oder mehr <b>Weißabgleich</b> bringt Wärme in Haut, Sand und Fische.'; }
-  else if(ratio>1.2){ vd.classList.add('warn'); vt.textContent='Zu warm – Rot dominiert, Hauttöne werden orange.';
-    tip.innerHTML='<b>Rot zurückholen</b> etwas zurücknehmen, bis das Wasser wieder klar blau wirkt.'; }
-  else { vd.classList.add('ok'); vt.textContent='Farben ausgewogen – so sieht es unter Wasser wirklich aus.';
-    tip.innerHTML='Jetzt nur noch Feinschliff: <b>Schärfe</b> für Details, <b>Sättigung</b> für Leuchtkraft. Dann speichern.'; }
+  if(ratio<0.6){ vd.classList.add('bad'); vt.textContent=t('v.bad'); tip.innerHTML=t('tip.bad'); }
+  else if(ratio<0.8){ vd.classList.add('warn'); vt.textContent=t('v.cool'); tip.innerHTML=t('tip.cool'); }
+  else if(ratio>1.2){ vd.classList.add('warn'); vt.textContent=t('v.warm'); tip.innerHTML=t('tip.warm'); }
+  else { vd.classList.add('ok'); vt.textContent=t('v.ok'); tip.innerHTML=t('tip.ok'); }
 }
 
 // ---------- UI ----------
@@ -165,6 +161,20 @@ function applyPreset(name){
   clearPreset(); document.querySelector(`[data-p="${name}"]`).classList.add('on'); schedule();
 }
 [$('presets'),$('presets2')].forEach(el=>el.addEventListener('click',e=>{ const b=e.target.closest('button'); if(b) applyPreset(b.dataset.p); }));
+
+// Mobil sind die Preset-Reihen horizontal wischbar - das sieht man ihnen aber
+// nicht an. Deshalb ein Pfeil-Hinweis am rechten Rand, der verschwindet,
+// sobald man am Ende der Reihe angekommen ist.
+document.querySelectorAll('.presets').forEach(row=>{
+  const wrap=document.createElement('div'); wrap.className='scrollwrap';
+  row.parentNode.insertBefore(wrap,row); wrap.appendChild(row);
+  const hint=document.createElement('span'); hint.className='swipe-hint'; hint.textContent='›';
+  wrap.appendChild(hint);
+  const update=()=>wrap.classList.toggle('more', row.scrollWidth - row.clientWidth - row.scrollLeft > 8);
+  row.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',update);
+  update();
+});
 $('reset').addEventListener('click',()=>applyPreset('lliteras'));
 
 // Vergleichsschieber
@@ -205,7 +215,7 @@ function roundRect(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,
 // Speichern: 1) Teilen-Menü (Fotos sichern), 2) Download, 3) Vorschau-Overlay zum Gedrückthalten
 $('save').addEventListener('click',async()=>{
   if(!fullImg) return;
-  const btn=$('save'); btn.disabled=true; btn.textContent='Rendere …';
+  const btn=$('save'); btn.disabled=true; btn.textContent=t('act.render');
   await new Promise(r=>setTimeout(r,30));
   const MAXE=/iPhone|iPad|Android/i.test(navigator.userAgent)?3000:6000;
   const es=Math.min(1,MAXE/Math.max(fullImg.width,fullImg.height));
@@ -217,7 +227,7 @@ $('save').addEventListener('click',async()=>{
   ctx.putImageData(dst,0,0);
   if($('wm').checked) watermark(ctx,c.width,c.height);
   const dataUrl=c.toDataURL('image/jpeg',0.94);
-  btn.disabled=false; btn.textContent='Foto speichern';
+  btn.disabled=false; btn.textContent=t('act.save');
   // 1) Share-Sheet
   try{
     const blob=await (await fetch(dataUrl)).blob();
@@ -231,7 +241,7 @@ $('ovclose').addEventListener('click',()=>$('ov').classList.remove('on'));
 
 // Mobil: Original per Gedrückthalten zeigen
 const holdBtn=$('hold');
-const showOrig=on=>{ wrapEl.style.setProperty('--split',on?'100%':'0%'); holdBtn.textContent=on?'Original':'Gedrückt halten: Original'; };
+const showOrig=on=>{ wrapEl.style.setProperty('--split',on?'100%':'0%'); holdBtn.textContent=on?t('hold.active'):t('hold.idle'); };
 ['pointerdown','touchstart'].forEach(ev=>holdBtn.addEventListener(ev,e=>{e.preventDefault();e.stopPropagation();showOrig(true);},{passive:false}));
 ['pointerup','pointercancel','pointerleave','touchend','touchcancel'].forEach(ev=>holdBtn.addEventListener(ev,e=>{e.stopPropagation();showOrig(false);}));
 holdBtn.addEventListener('contextmenu',e=>e.preventDefault());
@@ -240,7 +250,7 @@ if(window.matchMedia('(max-width:860px)').matches) wrapEl.style.setProperty('--s
 // Bottom-Bar spiegelt die Desktop-Buttons
 $('save2').addEventListener('click',()=>$('save').click());
 $('reset2').addEventListener('click',()=>$('reset').click());
-new MutationObserver(()=>{$('save2').disabled=$('save').disabled;$('reset2').disabled=$('reset').disabled;$('save2').textContent=$('save').textContent.replace('Foto speichern','Speichern');})
+new MutationObserver(()=>{$('save2').disabled=$('save').disabled;$('reset2').disabled=$('reset').disabled;$('save2').textContent=$('save').textContent.replace(t('act.save'),t('act.save2'));})
   .observe($('save'),{attributes:true,childList:true,characterData:true,subtree:true});
 new MutationObserver(()=>{$('reset2').disabled=$('reset').disabled;}).observe($('reset'),{attributes:true});
 
@@ -265,8 +275,8 @@ if ('serviceWorker' in navigator) {
 }
 
 // Sichtbare Version: Kopfzeile (Desktop) und Footer (überall)
-$('meta').textContent = APP_VERSION + ' · ' + $('meta').textContent;
-$('version').textContent = 'Tauchfoto Enhancer ' + APP_VERSION;
+$('meta').textContent = APP_VERSION + ' · ' + t('meta.empty');
+$('version').textContent = 'Mero Dive Pictures ' + APP_VERSION;
 
 // Installations-Hinweis: nur im Browser (nicht in der installierten App),
 // merkt sich das Wegklicken. Android zeigt einen echten Installieren-Button
@@ -280,12 +290,12 @@ $('version').textContent = 'Tauchfoto Enhancer ' + APP_VERSION;
   let deferred = null;
   window.addEventListener('beforeinstallprompt', e => {
     e.preventDefault(); deferred = e;
-    $('install-text').textContent = 'Als App installieren – mit eigenem Icon und offline nutzbar.';
+    $('install-text').textContent = t('inst.android');
     $('install-btn').hidden = false; el.hidden = false;
   });
   const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
   if (isIOS) {
-    $('install-text').innerHTML = 'Als App aufs iPhone: <b>Teilen-Symbol</b> (Quadrat mit Pfeil) antippen → <b>„Zum Home-Bildschirm“</b>. Läuft dann auch offline.';
+    $('install-text').innerHTML = t('inst.ios');
     el.hidden = false;
   }
   $('install-btn').addEventListener('click', () => { if (deferred) { deferred.prompt(); deferred = null; } el.hidden = true; });
@@ -300,3 +310,18 @@ setHeaderH();
 window.addEventListener('resize', setHeaderH);
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.addEventListener('load', () => window.scrollTo(0, 0));
+
+// Sprachwechsel: von i18n.js ausgelöst - dynamische Texte nachziehen
+document.addEventListener('langchange', () => {
+  if (!fullImg) $('meta').textContent = APP_VERSION + ' · ' + t('meta.empty');
+  if (!previewData) $('verdict-text').textContent = t('check.initial');
+  holdBtn.textContent = t('hold.idle');
+  if ($('save').textContent !== t('act.render')) { $('save').textContent = t('act.save'); $('save2').textContent = t('act.save2'); }
+  const it = $('install-text');
+  if (it.innerHTML.length) {
+    if (!$('install-btn').hidden) it.textContent = t('inst.android');
+    else if (/iPhone|iPad|iPod/.test(navigator.userAgent)) it.innerHTML = t('inst.ios');
+    else it.textContent = t('inst.default');
+  }
+  schedule();
+});
