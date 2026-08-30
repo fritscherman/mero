@@ -254,6 +254,7 @@
   .tile .chev{flex:none;font-size:30px;line-height:1;color:var(--white);opacity:.9}
   .tile.t-editor{background-image:url("../assets/tiles/editor.jpg")}
   .tile.t-spots{background-image:url("../assets/tiles/spots.jpg")}
+  .tile.t-training{background-image:url("../assets/tiles/training.jpg")}
   .tile.t-pack{background-image:url("../assets/tiles/pack.jpg")}
   .tile.t-safety{background-image:url("../assets/tiles/safety.jpg")}
   .tile.t-contact{background-image:url("../assets/tiles/contact.jpg");background-position:center 35%}
@@ -294,6 +295,16 @@
   /* Tauchplatz-Karten: Foto oben, Aktionen unten; Desktop zweispaltig */
   .spots-facts{font-family:var(--font-mono);color:#4A5A75;font-size:12px;margin:-8px 0 14px}
   .spot-photo{aspect-ratio:16/9;border-radius:8px;background:var(--navy) center/cover no-repeat;margin-bottom:10px}
+
+  /* Ausbildung: Kurs-Gruppen als Karten, Kurse als Zeilen mit Preis rechts */
+  .training-list{display:grid;gap:12px;margin-bottom:12px}
+  .course{padding:10px 0 2px}
+  .course+.course{border-top:1px solid var(--line)}
+  .course-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  .course h3{font-family:var(--font-display);font-weight:700;color:var(--navy);font-size:16px;margin-bottom:2px}
+  .course-price{font-family:var(--font-mono);color:var(--red-deep);font-weight:700;font-size:13px;white-space:nowrap}
+  .course p{margin-bottom:8px;max-width:640px}
+  .course .spot-meta{margin-bottom:4px}
   .spot-actions{display:flex;gap:8px;flex-wrap:wrap}
   @media(min-width:700px){.spots-list{grid-template-columns:1fr 1fr}}
   .page-intro a{color:var(--navy);font-weight:700}

@@ -1,5 +1,5 @@
 const $ = id => document.getElementById(id);
-const APP_VERSION = 'v5.8';
+const APP_VERSION = 'v5.9';
 const stage=$('stage'), wrap=$('wrap'), hint=$('hint'), fileIn=$('file');
 const out=$('out'), orig=$('orig');
 const ids=['red','wb','dehaze','bright','sat','sharp'];
@@ -339,6 +339,7 @@ window.addEventListener('load', () => window.scrollTo(0, 0));
 // Sprachwechsel: von i18n.js ausgelöst - dynamische Texte nachziehen
 document.addEventListener('langchange', () => {
   renderSpots();
+  renderTraining();
   renderPacking();
   if (!fullImg) $('meta').textContent = APP_VERSION + ' · ' + t('meta.empty');
   if (!previewData) $('verdict-text').textContent = t('check.initial');
@@ -355,7 +356,7 @@ document.addEventListener('langchange', () => {
 
 // ---------- Navigation: Startseite / MeroColor / Tauchplätze / Kontakt ----------
 // Hash-Routing, damit die Zurück-Taste (Browser & Android) funktioniert
-const VIEW_IDS=['home','editor','spots','packing','safety','contact'];
+const VIEW_IDS=['home','editor','spots','training','packing','safety','contact'];
 function route(){
   let v=(location.hash||'').replace('#','');
   if(!VIEW_IDS.includes(v)) v='home';
@@ -400,6 +401,23 @@ $('spots-list').addEventListener('click',e=>{
   const b=e.target.closest('button[data-site]');
   if(b){ applyPreset(b.dataset.site); location.hash='#editor'; }
 });
+
+// Ausbildungs-Seite aus den i18n-Daten aufbauen (Quelle: mero-diving.com/tauchkurse)
+const COURSE_GROUPS=[
+  ['crs.g.start',['schnupper']],
+  ['crs.g.kids',['kids','grund','jowd']],
+  ['crs.g.beginner',['owd']],
+  ['crs.g.adv',['aowd','deep','navi','nitrox','rescue','night','buoy','scooter']],
+];
+function renderTraining(){
+  $('training-list').innerHTML=COURSE_GROUPS.map(([g,keys])=>
+    `<div class="card"><h2>${t(g)}</h2>`+keys.map(k=>
+      `<div class="course"><div class="course-head"><h3>${t('crs.'+k)}</h3><span class="course-price">${t('crs.'+k+'.p')}</span></div>`+
+      `<p class="spot-meta">${t('crs.'+k+'.m')}</p><p>${t('crs.'+k+'.d')}</p></div>`
+    ).join('')+`</div>`
+  ).join('');
+}
+renderTraining();
 
 // Packliste: Haken bleiben lokal gespeichert (localStorage), pro Eintrag ein Schlüssel
 const PACK_KEYS=['brevet','attest','swim','sun','water','mask','fins','suit','computer','camera'];
