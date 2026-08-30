@@ -254,7 +254,7 @@
   .tile.t-spots{background-image:url("../assets/tiles/spots.jpg")}
   .tile.t-pack{background-image:url("../assets/tiles/pack.jpg")}
   .tile.t-safety{background-image:url("../assets/tiles/safety.jpg")}
-  .tile.t-contact{background-image:url("../assets/tiles/contact.jpg")}
+  .tile.t-contact{background-image:url("../assets/tiles/contact.jpg");background-position:center 35%}
   .tile.t-web{background-image:url("../assets/tiles/web.jpg")}
   .spots-list{display:grid;gap:12px;margin-bottom:12px}
   .spot h3{font-family:var(--font-display);font-weight:700;color:var(--navy);font-size:17px;margin-bottom:2px}
@@ -285,12 +285,23 @@
   .pack-item input{width:20px;height:20px;accent-color:var(--red-deep);flex:none;cursor:pointer}
   .pack-item input:checked+span{color:var(--muted);text-decoration:line-through}
 
-  /* Schmale Handys: Bildausschnitt nach links schieben, damit Taucher und
-     Felswand (rechte Bildhälfte) sichtbar werden. Das ins Foto eingebaute Logo
-     wandert dabei aus dem Bild - deshalb zeigt der Hero hier das eigene
-     Logo-Bild. Ab Tablet-Breite ist das Foto fast komplett zu sehen,
-     dort bleibt alles beim Alten. */
+  /* Schmale Handys: logofreie Variante des Headerfotos (rechte Bildhälfte mit
+     Taucher und Felswand), damit nie das eingebaute UND das Overlay-Logo
+     gleichzeitig zu sehen sind - der Beschnitt hängt sonst von der exakten
+     Headerhöhe des Geräts ab. Ab Tablet-Breite bleibt das Originalfoto. */
   @media(max-width:560px){
-    header{padding-top:calc(16px + env(safe-area-inset-top));background-position:68% top}
+    header{padding-top:calc(16px + env(safe-area-inset-top));
+      background-image:linear-gradient(180deg,rgba(25,7,88,.12) 35%,rgba(25,7,88,.6)),url("../assets/header-mobile.jpg");
+      background-position:right top}
     .brand img{display:block;width:72px}
   }
+
+  /* Header-Logo/-Titel und Bottom-Bar-Home führen zur Startseite */
+  .brand img,.brand h1{cursor:pointer}
+  a.btn{text-decoration:none}
+
+  /* Tauchplatz-Karten: Foto oben, Aktionen unten; Desktop zweispaltig */
+  .spot-photo{height:110px;border-radius:8px;background:var(--navy) center/cover no-repeat;margin-bottom:10px}
+  .spot-actions{display:flex;gap:8px;flex-wrap:wrap}
+  @media(min-width:700px){.spots-list{grid-template-columns:1fr 1fr}}
+  .page-intro a{color:var(--navy);font-weight:700}
