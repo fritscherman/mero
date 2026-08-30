@@ -1,13 +1,20 @@
-# Mero Diving · Tauchfoto Enhancer
+# Mero Diving App
 
-Web-App zum Aufbereiten von Tauchfotos direkt im Browser – Rotkanal zurückholen, Weißabgleich, Trübung entfernen, Schärfen und Mero-Diving-Wasserzeichen. Die Verarbeitung läuft komplett lokal im Browser, es werden keine Fotos hochgeladen.
+Die App der Tauchbasis Mero Diving (Cala Ratjada). Startseite mit vier Bereichen:
+
+- **MeroColor – Bildoptimierer**: Tauchfotos direkt im Browser aufbereiten – Rotkanal zurückholen, Weißabgleich, Trübung entfernen, Schärfen, Mero-Branding. Die Verarbeitung läuft komplett lokal, es werden keine Fotos hochgeladen.
+- **Tauchplätze**: die Spots rund um Cala Ratjada, mit Absprung in den Bildoptimierer (Preset wird passend gesetzt).
+- **Kontakt**: Adresse, Google-Maps- und Website-Link.
+- **mero-diving.com**: externer Link zur Website (Kurse, Preise, Buchung).
+
+Die Navigation läuft über URL-Hashes (`#home`, `#editor`, `#spots`, `#contact`), damit die Zurück-Taste im Browser und in der installierten App funktioniert.
 
 ## Struktur
 
 ```
-index.html            Markup der App
+index.html            Markup der App (alle Views)
 css/styles.css        Alle Styles (Desktop + Mobil)
-js/app.js             Bildverarbeitung, Presets, UI-Logik
+js/app.js             Bildverarbeitung, Presets, Navigation, UI-Logik
 js/i18n.js            Übersetzungen (DE/EN/ES) und Sprachumschalter
 assets/logo.png       Mero-Diving-Logo (Favicon, Wasserzeichen, kompakter Header)
 assets/header.jpg     Hero-Headerbild mit eingebautem Logo

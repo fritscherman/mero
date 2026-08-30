@@ -1,5 +1,5 @@
 const $ = id => document.getElementById(id);
-const APP_VERSION = 'v4.5';
+const APP_VERSION = 'v5.0';
 const stage=$('stage'), wrap=$('wrap'), hint=$('hint'), fileIn=$('file');
 const out=$('out'), orig=$('orig');
 const ids=['red','wb','dehaze','bright','sat','sharp'];
@@ -293,7 +293,7 @@ if ('serviceWorker' in navigator) {
 
 // Sichtbare Version: Kopfzeile (Desktop) und Footer (überall)
 $('meta').textContent = APP_VERSION + ' · ' + t('meta.empty');
-$('version').textContent = 'Mero Dive Pictures ' + APP_VERSION;
+$('version').textContent = 'Mero Diving App ' + APP_VERSION;
 // Farbcheck-Starttext in der erkannten Sprache (im HTML steht Deutsch)
 $('verdict-text').textContent = t('check.initial');
 
@@ -329,7 +329,7 @@ setHeaderH();
 window.addEventListener('resize', setHeaderH);
 // Hero-Header: gross beim Start, ab leichtem Scrollen kompakte Markenleiste;
 // sobald ein Bild geladen ist, bleibt er dauerhaft kompakt (mehr Platz zum Bearbeiten)
-function onHeaderScroll(){ headerEl.classList.toggle('compact', window.scrollY > 30 || !!fullImg); setHeaderH(); }
+function onHeaderScroll(){ headerEl.classList.toggle('compact', window.scrollY > 30 || (!!fullImg && location.hash === '#editor')); setHeaderH(); }
 window.addEventListener('scroll', onHeaderScroll, {passive:true});
 headerEl.addEventListener('transitionend', setHeaderH);
 onHeaderScroll();
@@ -338,6 +338,7 @@ window.addEventListener('load', () => window.scrollTo(0, 0));
 
 // Sprachwechsel: von i18n.js ausgelöst - dynamische Texte nachziehen
 document.addEventListener('langchange', () => {
+  renderSpots();
   if (!fullImg) $('meta').textContent = APP_VERSION + ' · ' + t('meta.empty');
   if (!previewData) $('verdict-text').textContent = t('check.initial');
   holdBtn.textContent = t('hold.idle');
@@ -349,4 +350,32 @@ document.addEventListener('langchange', () => {
     else it.textContent = t('inst.default');
   }
   schedule();
+});
+
+// ---------- Navigation: Startseite / MeroColor / Tauchplätze / Kontakt ----------
+// Hash-Routing, damit die Zurück-Taste (Browser & Android) funktioniert
+const VIEW_IDS=['home','editor','spots','contact'];
+function route(){
+  let v=(location.hash||'').replace('#','');
+  if(!VIEW_IDS.includes(v)) v='home';
+  VIEW_IDS.forEach(k=>{const el=$('view-'+k); if(el) el.hidden=(k!==v);});
+  window.scrollTo(0,0);
+  onHeaderScroll();
+}
+window.addEventListener('hashchange',route);
+route();
+
+// Tauchplatz-Seite aus den i18n-Daten aufbauen (bei Sprachwechsel neu)
+const SITE_KEYS=['lliteras','maria','kkaese','capfreu','gkaese','leuchtturm','loewenkopf','kathedrale'];
+function renderSpots(){
+  $('spots-list').innerHTML=SITE_KEYS.map(k=>
+    `<div class="card spot"><h3>${t('pn.'+k).replace(/&amp;/g,'&')}</h3>`+
+    `<p class="spot-meta">${t('p.'+k)}</p><p>${t('site.'+k)}</p>`+
+    `<button class="btn primary sm" data-site="${k}">${t('spots.edit')}</button></div>`
+  ).join('');
+}
+renderSpots();
+$('spots-list').addEventListener('click',e=>{
+  const b=e.target.closest('button[data-site]');
+  if(b){ applyPreset(b.dataset.site); location.hash='#editor'; }
 });
