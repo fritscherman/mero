@@ -9,14 +9,23 @@
   *{box-sizing:border-box;margin:0;padding:0}
   html,body{height:100%}
   body{background:var(--ice);color:var(--text);font-family:var(--font-body);font-size:14px;line-height:1.45;min-height:100vh}
-  header{background:var(--navy);color:var(--white);display:flex;align-items:center;justify-content:space-between;padding:12px 24px;gap:16px;flex-wrap:wrap;
+  header{color:var(--white);display:flex;align-items:flex-start;justify-content:space-between;padding:26px 24px 30px;gap:16px;flex-wrap:wrap;
     border-bottom:4px solid var(--red);
+    background:linear-gradient(180deg,rgba(25,7,88,.18),rgba(25,7,88,.55)),var(--navy) url("../assets/header.jpg") center/cover no-repeat;
     /* Immer sichtbar (Marke!), inkl. Abstand für Notch/Statusleiste der installierten App */
-    position:sticky;top:0;z-index:30;padding-top:calc(12px + env(safe-area-inset-top))}
-  .brand{display:flex;align-items:center;gap:14px}
-  .brand img{width:64px;height:auto;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))}
-  h1{font-family:var(--font-display);font-weight:800;font-size:22px;line-height:1.1;letter-spacing:.01em}
-  h1 small{display:block;font-family:var(--font-body);font-weight:400;font-size:12px;opacity:.8;letter-spacing:.08em;text-transform:uppercase;margin-top:3px}
+    position:sticky;top:0;z-index:30;padding-top:calc(26px + env(safe-area-inset-top));
+    transition:padding .25s ease}
+  .brand{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+  .brand img{width:96px;height:auto;filter:drop-shadow(0 2px 6px rgba(0,0,0,.45));transition:width .25s ease}
+  h1{font-family:var(--font-display);font-weight:800;font-size:34px;line-height:1.1;letter-spacing:.01em;font-size:clamp(22px,4vw,34px);text-shadow:0 2px 8px rgba(0,0,0,.45)}
+  h1 small{display:block;font-family:var(--font-body);font-weight:400;font-size:13px;opacity:.95;letter-spacing:.18em;text-transform:uppercase;margin-top:8px;text-shadow:0 1px 4px rgba(0,0,0,.55)}
+  /* Kompakte Markenleiste beim Scrollen */
+  header.compact{padding:6px 24px;padding-top:calc(6px + env(safe-area-inset-top));align-items:center}
+  header.compact .brand{flex-direction:row;align-items:center}
+  header.compact .brand img{width:44px}
+  header.compact h1{display:none}
+  header.compact .lang{display:none}
+  header.compact p{display:none}
   header p{font-size:12px;opacity:.85;font-family:var(--font-mono)}
   .app{display:grid;grid-template-columns:1fr 320px;gap:16px;padding:20px 24px 24px;max-width:1500px;margin:0 auto}
   @media(max-width:860px){.app{grid-template-columns:1fr}}
@@ -115,10 +124,12 @@
     .app,.app>*,.card{min-width:0;max-width:100%}
     .stage{width:100%}
     .presets{width:100%}
-    header{padding:8px 14px;gap:8px;padding-top:calc(8px + env(safe-area-inset-top))}
-    .brand img{width:40px}
-    h1{font-size:17px}
-    h1 small{font-size:10px;margin-top:1px}
+    header{padding:18px 14px 20px;gap:8px;padding-top:calc(18px + env(safe-area-inset-top))}
+    .brand{gap:10px}
+    .brand img{width:64px}
+    h1 small{font-size:10px;margin-top:5px;letter-spacing:.14em}
+    header.compact{padding:6px 14px;padding-top:calc(6px + env(safe-area-inset-top))}
+    header.compact .brand img{width:40px}
     header p{display:none}
     /* Blocklayout statt Grid: nur so kann der Bildbereich über die ganze
        Seitenhöhe sticky unter dem Header bleiben (Grid-Items kleben nur
@@ -190,9 +201,10 @@
   }
   @keyframes swipe-nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
 
-  /* Sprachumschalter im Header */
-  .lang{display:flex;gap:4px}
-  .lang button{background:transparent;color:var(--white);opacity:.6;border:1px solid rgba(255,255,255,.35);border-radius:6px;
-    padding:5px 9px;font:700 11px var(--font-mono);cursor:pointer;letter-spacing:.05em}
-  .lang button:hover{opacity:1}
+  /* Sprachumschalter: Pills im Hero unter dem Untertitel */
+  .lang{display:flex;gap:10px;margin-top:6px}
+  .lang button{background:rgba(25,7,88,.45);color:var(--white);opacity:.85;border:1.5px solid rgba(255,255,255,.4);border-radius:10px;
+    padding:9px 16px;font:700 14px var(--font-body);cursor:pointer;letter-spacing:.06em;transition:all .15s}
+  .lang button:hover{opacity:1;border-color:var(--white)}
   .lang button.on{opacity:1;background:var(--red);border-color:var(--red)}
+

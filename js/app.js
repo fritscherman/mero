@@ -1,5 +1,5 @@
 const $ = id => document.getElementById(id);
-const APP_VERSION = 'v3.9';
+const APP_VERSION = 'v4.2';
 const stage=$('stage'), wrap=$('wrap'), hint=$('hint'), fileIn=$('file');
 const out=$('out'), orig=$('orig'), hist=$('hist');
 const ids=['red','wb','dehaze','bright','sat','sharp'];
@@ -310,6 +310,11 @@ const headerEl = document.querySelector('header');
 function setHeaderH(){ document.documentElement.style.setProperty('--header-h', headerEl.offsetHeight + 'px'); }
 setHeaderH();
 window.addEventListener('resize', setHeaderH);
+// Hero-Header: gross beim Start, ab leichtem Scrollen kompakte Markenleiste
+function onHeaderScroll(){ headerEl.classList.toggle('compact', window.scrollY > 30); setHeaderH(); }
+window.addEventListener('scroll', onHeaderScroll, {passive:true});
+headerEl.addEventListener('transitionend', setHeaderH);
+onHeaderScroll();
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 window.addEventListener('load', () => window.scrollTo(0, 0));
 
