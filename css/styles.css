@@ -269,3 +269,13 @@
   .pack-item:hover{background:var(--sky)}
   .pack-item input{width:20px;height:20px;accent-color:var(--red-deep);flex:none;cursor:pointer}
   .pack-item input:checked+span{color:var(--muted);text-decoration:line-through}
+
+  /* Schmale Handys: Bildausschnitt nach links schieben, damit Taucher und
+     Felswand (rechte Bildhälfte) sichtbar werden. Das ins Foto eingebaute Logo
+     wandert dabei aus dem Bild - deshalb zeigt der Hero hier das eigene
+     Logo-Bild. Ab Tablet-Breite ist das Foto fast komplett zu sehen,
+     dort bleibt alles beim Alten. */
+  @media(max-width:560px){
+    header{padding-top:calc(16px + env(safe-area-inset-top));background-position:68% top}
+    .brand img{display:block;width:72px}
+  }
