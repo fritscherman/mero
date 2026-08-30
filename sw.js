@@ -1,8 +1,9 @@
 // Service Worker für den Mero Diving Tauchfoto Enhancer.
-// Precache der App-Shell, danach stale-while-revalidate: offline läuft die
-// zuletzt gecachte Version, online wird der Cache im Hintergrund erneuert.
-// Bei Änderungen an den App-Dateien VERSION hochzählen.
-const VERSION = 'mero-v2';
+// Strategie: Netz zuerst, Cache nur als Offline-Fallback. Online bekommt man
+// dadurch immer den neuesten Stand; offline läuft die zuletzt geladene Version.
+// Bei Änderungen an den App-Dateien VERSION hochzählen – die Seite zeigt dann
+// einen "Aktualisieren"-Hinweis, sobald die neue Version installiert ist.
+const VERSION = 'mero-v3';
 const SHELL = [
   './',
   'index.html',
@@ -33,11 +34,16 @@ self.addEventListener('fetch', e => {
   if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
   e.respondWith(
     caches.open(VERSION).then(async cache => {
-      const cached = await cache.match(req, {ignoreSearch: req.mode === 'navigate'});
-      const refresh = fetch(req)
-        .then(res => { if (res.ok) cache.put(req, res.clone()); return res; })
-        .catch(() => cached);
-      return cached || refresh;
+      try {
+        const res = await fetch(req, {cache: 'no-cache'});
+        if (res.ok) cache.put(req, res.clone());
+        return res;
+      } catch {
+        const cached = await cache.match(req, {ignoreSearch: req.mode === 'navigate'});
+        if (cached) return cached;
+        if (req.mode === 'navigate') { const shell = await cache.match('index.html'); if (shell) return shell; }
+        throw new Error('offline und nicht im Cache: ' + req.url);
+      }
     })
   );
 });

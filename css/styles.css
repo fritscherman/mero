@@ -153,3 +153,15 @@
     .overlay p{font-size:15px}
     footer{padding-bottom:12px}
   }
+
+  /* Update-Hinweis: erscheint, wenn eine neue Version installiert wurde */
+  .update-toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom));z-index:60;
+    display:flex;align-items:center;gap:12px;background:var(--navy);color:var(--white);border:1px solid rgba(255,255,255,.25);
+    border-radius:12px;padding:10px 12px 10px 16px;font-size:13.5px;box-shadow:0 8px 24px rgba(25,7,88,.35);max-width:calc(100vw - 24px)}
+  .update-toast[hidden]{display:none}
+  .update-toast .btn{flex:none;padding:9px 14px}
+  .update-x{flex:none;background:none;border:0;color:var(--white);opacity:.7;font-size:14px;cursor:pointer;padding:6px}
+  .update-x:hover{opacity:1}
+  @media(max-width:860px){
+    .update-toast{bottom:calc(78px + env(safe-area-inset-bottom))} /* über der Bottom-Bar */
+  }
