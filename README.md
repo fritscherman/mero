@@ -19,6 +19,7 @@ js/i18n.js            Übersetzungen (DE/EN/ES) und Sprachumschalter
 assets/logo.png       Mero-Diving-Logo (Favicon, Wasserzeichen, kompakter Header)
 assets/header.jpg     Hero-Headerbild mit eingebautem Logo
 assets/icon-*.png     App-Icons für PWA-Installation (Manifest + iOS)
+assets/tiles/*.jpg    Banner-Fotos der Startseiten-Kacheln
 ```
 
 ## PWA
