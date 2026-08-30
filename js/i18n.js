@@ -70,6 +70,7 @@ de: {
   'site.kathedrale':'Große Höhle mit beeindruckenden Lichtstrahlen – ein Platz zum Staunen.',
   'contact.h':'Kontakt',
   'contact.base':'Tauchbasis in der Cala Lliteras · seit 1969 · Dive with friends',
+  'contact.addr':'<b>Tauchbasis:</b> Cala Lliteras · Carrer de Na Lliteras s/n · 07590 Cala Ratjada<br><b>Anschrift:</b> C/ Llebeig 1-3 · 07589 Cala Ratjada · Mallorca',
   'contact.web':'Website öffnen',
   'contact.maps':'In Google Maps öffnen',
   'contact.note':'Kurse, Preise und Buchung findest du auf mero-diving.com.',
@@ -142,6 +143,7 @@ en: {
   'site.kathedrale':'A large cave with stunning light beams – a place to marvel.',
   'contact.h':'Contact',
   'contact.base':'Dive center at Cala Lliteras · since 1969 · Dive with friends',
+  'contact.addr':'<b>Dive center:</b> Cala Lliteras · Carrer de Na Lliteras s/n · 07590 Cala Ratjada<br><b>Postal address:</b> C/ Llebeig 1-3 · 07589 Cala Ratjada · Mallorca',
   'contact.web':'Open website',
   'contact.maps':'Open in Google Maps',
   'contact.note':'You will find courses, prices and booking at mero-diving.com.',
@@ -214,6 +216,7 @@ es: {
   'site.kathedrale':'Gran cueva con impresionantes rayos de luz: un lugar para asombrarse.',
   'contact.h':'Contacto',
   'contact.base':'Centro de buceo en Cala Lliteras · desde 1969 · Dive with friends',
+  'contact.addr':'<b>Centro de buceo:</b> Cala Lliteras · Carrer de Na Lliteras s/n · 07590 Cala Ratjada<br><b>Dirección postal:</b> C/ Llebeig 1-3 · 07589 Cala Ratjada · Mallorca',
   'contact.web':'Abrir la web',
   'contact.maps':'Abrir en Google Maps',
   'contact.note':'Cursos, precios y reservas en mero-diving.com.',
@@ -255,7 +258,7 @@ const I18N_MAP = {
   '#tile-web-s':'tile.web.s',
   '.back':'back',
   '#spots-h':'spots.h','#spots-intro':'spots.intro',
-  '#contact-h':'contact.h','#contact-base':'contact.base',
+  '#contact-h':'contact.h','#contact-base':'contact.base','#contact-addr':'contact.addr',
   '#contact-web':'contact.web','#contact-maps':'contact.maps','#contact-note':'contact.note',
 };
 
