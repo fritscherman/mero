@@ -1,5 +1,5 @@
 const $ = id => document.getElementById(id);
-const APP_VERSION = 'v3.5';
+const APP_VERSION = 'v3.6';
 const stage=$('stage'), wrap=$('wrap'), hint=$('hint'), fileIn=$('file');
 const out=$('out'), orig=$('orig'), hist=$('hist');
 const ids=['red','wb','dehaze','bright','sat','sharp'];
@@ -165,6 +165,20 @@ function applyPreset(name){
   clearPreset(); document.querySelector(`[data-p="${name}"]`).classList.add('on'); schedule();
 }
 [$('presets'),$('presets2')].forEach(el=>el.addEventListener('click',e=>{ const b=e.target.closest('button'); if(b) applyPreset(b.dataset.p); }));
+
+// Mobil sind die Preset-Reihen horizontal wischbar - das sieht man ihnen aber
+// nicht an. Deshalb ein Pfeil-Hinweis am rechten Rand, der verschwindet,
+// sobald man am Ende der Reihe angekommen ist.
+document.querySelectorAll('.presets').forEach(row=>{
+  const wrap=document.createElement('div'); wrap.className='scrollwrap';
+  row.parentNode.insertBefore(wrap,row); wrap.appendChild(row);
+  const hint=document.createElement('span'); hint.className='swipe-hint'; hint.textContent='›';
+  wrap.appendChild(hint);
+  const update=()=>wrap.classList.toggle('more', row.scrollWidth - row.clientWidth - row.scrollLeft > 8);
+  row.addEventListener('scroll',update,{passive:true});
+  window.addEventListener('resize',update);
+  update();
+});
 $('reset').addEventListener('click',()=>applyPreset('lliteras'));
 
 // Vergleichsschieber

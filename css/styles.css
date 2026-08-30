@@ -174,3 +174,18 @@
   .install-hint .btn{flex:none;padding:9px 14px}
   .update-x.navy{color:var(--navy)}
   @media(max-width:860px){ .install-hint{margin:10px 12px 0} }
+
+  /* Wisch-Hinweis für die Preset-Reihen (nur Mobil relevant) */
+  .scrollwrap{position:relative;min-width:0}
+  .swipe-hint{display:none}
+  @media(max-width:860px){
+    .swipe-hint{display:flex;align-items:center;justify-content:flex-end;position:absolute;top:0;bottom:4px;right:-14px;width:44px;
+      padding-right:6px;pointer-events:none;opacity:0;transition:opacity .25s;
+      background:linear-gradient(270deg,var(--white) 35%,rgba(255,255,255,0));
+      color:var(--red);font-size:24px;font-weight:700;line-height:1}
+    .scrollwrap.more .swipe-hint{opacity:1}
+    @media(prefers-reduced-motion:no-preference){
+      .scrollwrap.more .swipe-hint{animation:swipe-nudge 1.6s ease-in-out infinite}
+    }
+  }
+  @keyframes swipe-nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
