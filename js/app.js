@@ -1,7 +1,7 @@
 const $ = id => document.getElementById(id);
-const APP_VERSION = 'v4.3';
+const APP_VERSION = 'v4.4';
 const stage=$('stage'), wrap=$('wrap'), hint=$('hint'), fileIn=$('file');
-const out=$('out'), orig=$('orig'), hist=$('hist');
+const out=$('out'), orig=$('orig');
 const ids=['red','wb','dehaze','bright','sat','sharp'];
 const PRESETS={
   // --- Tauchplätze (Quelle: mero-diving.com/tauchen) ---
@@ -43,6 +43,9 @@ function load(file){
   const show=err=>{const b=$('err');b.style.display='block';b.textContent=err;};
   const done=img=>{
     if(!img||!img.width){show(t('err.decode')+' ('+(file.type||t('err.format'))+').');return;}
+    // Altes ImageBitmap freigeben, sonst sammelt sich bei mehreren großen Fotos
+    // Speicher an (v.a. iOS Safari)
+    if(fullImg&&typeof fullImg.close==='function'){try{fullImg.close();}catch(e){}}
     fullImg=img;
     const s=Math.min(1,MAXP/Math.max(img.width,img.height));
     const w=Math.round(img.width*s), h=Math.round(img.height*s);
@@ -144,7 +147,7 @@ function drawHist(d){
   [['r',a.r,o.r],['g',a.g,o.g],['b',a.b,o.b]].forEach(([k,v,ov])=>{
     $('b-'+k).style.width=pct(v)+'%'; $('g-'+k).style.left=pct(ov)+'%'; $('v-'+k).textContent=pct(v)+' %';
   });
-  const ratio=a.r/((a.g+a.b)/2), blue=a.b/Math.max(1,a.r);
+  const ratio=a.r/Math.max(1,(a.g+a.b)/2), blue=a.b/Math.max(1,a.r);
   const vd=$('verdict'), vt=$('verdict-text'), tip=$('tip');
   vd.className='verdict';
   if(ratio<0.6){ vd.classList.add('bad'); vt.textContent=t('v.bad'); tip.innerHTML=t('tip.bad'); }
@@ -280,6 +283,8 @@ if ('serviceWorker' in navigator) {
 // Sichtbare Version: Kopfzeile (Desktop) und Footer (überall)
 $('meta').textContent = APP_VERSION + ' · ' + t('meta.empty');
 $('version').textContent = 'Mero Dive Pictures ' + APP_VERSION;
+// Farbcheck-Starttext in der erkannten Sprache (im HTML steht Deutsch)
+$('verdict-text').textContent = t('check.initial');
 
 // Installations-Hinweis: nur im Browser (nicht in der installierten App),
 // merkt sich das Wegklicken. Android zeigt einen echten Installieren-Button
