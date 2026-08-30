@@ -299,3 +299,8 @@
   /* Header-Logo/-Titel und Bottom-Bar-Home führen zur Startseite */
   .brand img,.brand h1{cursor:pointer}
   a.btn{text-decoration:none}
+
+  /* Tauchplatz-Karten: Foto oben, Aktionen unten; Desktop zweispaltig */
+  .spot-photo{height:110px;border-radius:8px;background:var(--navy) center/cover no-repeat;margin-bottom:10px}
+  .spot-actions{display:flex;gap:8px;flex-wrap:wrap}
+  @media(min-width:700px){.spots-list{grid-template-columns:1fr 1fr}}

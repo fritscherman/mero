@@ -3,7 +3,7 @@
 // dadurch immer den neuesten Stand; offline läuft die zuletzt geladene Version.
 // Bei Änderungen an den App-Dateien VERSION hochzählen – die Seite zeigt dann
 // einen "Aktualisieren"-Hinweis, sobald die neue Version installiert ist.
-const VERSION = 'mero-v21';
+const VERSION = 'mero-v22';
 const SHELL = [
   './',
   'index.html',
@@ -20,6 +20,14 @@ const SHELL = [
   'assets/tiles/safety.jpg',
   'assets/tiles/contact.jpg',
   'assets/tiles/web.jpg',
+  'assets/spots/lliteras.jpg',
+  'assets/spots/maria.jpg',
+  'assets/spots/kkaese.jpg',
+  'assets/spots/capfreu.jpg',
+  'assets/spots/gkaese.jpg',
+  'assets/spots/leuchtturm.jpg',
+  'assets/spots/loewenkopf.jpg',
+  'assets/spots/kathedrale.jpg',
   'assets/icon-192.png',
   'assets/icon-512.png',
   'assets/icon-maskable-512.png',
