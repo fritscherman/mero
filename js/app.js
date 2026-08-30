@@ -56,6 +56,7 @@ function load(file){
     $('save').disabled=$('reset').disabled=false;
     $('meta').textContent=`${file.name} · ${img.width}×${img.height} px · Mero Diving`;
     $('err').style.display='none';
+    onHeaderScroll();
     schedule();
   };
   const viaReader=()=>{
@@ -310,8 +311,9 @@ const headerEl = document.querySelector('header');
 function setHeaderH(){ document.documentElement.style.setProperty('--header-h', headerEl.offsetHeight + 'px'); }
 setHeaderH();
 window.addEventListener('resize', setHeaderH);
-// Hero-Header: gross beim Start, ab leichtem Scrollen kompakte Markenleiste
-function onHeaderScroll(){ headerEl.classList.toggle('compact', window.scrollY > 30); setHeaderH(); }
+// Hero-Header: gross beim Start, ab leichtem Scrollen kompakte Markenleiste;
+// sobald ein Bild geladen ist, bleibt er dauerhaft kompakt (mehr Platz zum Bearbeiten)
+function onHeaderScroll(){ headerEl.classList.toggle('compact', window.scrollY > 30 || !!fullImg); setHeaderH(); }
 window.addEventListener('scroll', onHeaderScroll, {passive:true});
 headerEl.addEventListener('transitionend', setHeaderH);
 onHeaderScroll();
