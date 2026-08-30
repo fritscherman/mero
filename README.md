@@ -9,7 +9,6 @@ index.html            Markup der App
 css/styles.css        Alle Styles (Desktop + Mobil)
 js/app.js             Bildverarbeitung, Presets, UI-Logik
 assets/logo.png       Mero-Diving-Logo (Header, Favicon, Wasserzeichen)
-.github/workflows/    GitHub-Pages-Deployment
 ```
 
 ## Lokal starten
@@ -18,6 +17,4 @@ Einfach `index.html` im Browser öffnen – es wird kein Build-Schritt und kein 
 
 ## Hosting (GitHub Pages)
 
-Der Workflow `.github/workflows/pages.yml` veröffentlicht das Repository bei jedem Push auf `main` automatisch über GitHub Actions auf GitHub Pages. Die Seite ist danach unter `https://<benutzername>.github.io/mero/` erreichbar.
-
-Falls das Deployment beim allerersten Lauf fehlschlägt: unter **Settings → Pages** als Source „GitHub Actions“ auswählen und den Workflow erneut starten.
+GitHub Pages ist unter **Settings → Pages** mit Source „Deploy from a branch“ (`main`, Root) konfiguriert. Jeder Push auf `main` wird von GitHub automatisch deployt; die Seite ist unter <https://fritscherman.github.io/mero/> erreichbar. Die Datei `.nojekyll` verhindert dabei eine unnötige Jekyll-Verarbeitung.
