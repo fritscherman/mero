@@ -1,5 +1,5 @@
 const $ = id => document.getElementById(id);
-const APP_VERSION = 'v3.7';
+const APP_VERSION = 'v3.8';
 const stage=$('stage'), wrap=$('wrap'), hint=$('hint'), fileIn=$('file');
 const out=$('out'), orig=$('orig'), hist=$('hist');
 const ids=['red','wb','dehaze','bright','sat','sharp'];
@@ -132,6 +132,7 @@ function render(){
   const dst=out.getContext('2d').createImageData(previewData.width,previewData.height);
   process(previewData,stats,p,dst);
   out.getContext('2d').putImageData(dst,0,0);
+  if($('wm').checked) watermark(out.getContext('2d'),out.width,out.height);
   drawHist(dst.data);
 }
 
@@ -176,6 +177,7 @@ document.querySelectorAll('.presets').forEach(row=>{
   update();
 });
 $('reset').addEventListener('click',()=>applyPreset('lliteras'));
+$('wm').addEventListener('change',schedule);
 
 // Vergleichsschieber
 const wrapEl=$('wrap');
