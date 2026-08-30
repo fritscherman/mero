@@ -3,7 +3,7 @@
 // dadurch immer den neuesten Stand; offline läuft die zuletzt geladene Version.
 // Bei Änderungen an den App-Dateien VERSION hochzählen – die Seite zeigt dann
 // einen "Aktualisieren"-Hinweis, sobald die neue Version installiert ist.
-const VERSION = 'mero-v15';
+const VERSION = 'mero-v17';
 const SHELL = [
   './',
   'index.html',
@@ -13,6 +13,12 @@ const SHELL = [
   'assets/logo.png',
   'assets/header.jpg',
   'assets/roboto-slab-700.woff2',
+  'assets/tiles/editor.jpg',
+  'assets/tiles/spots.jpg',
+  'assets/tiles/pack.jpg',
+  'assets/tiles/safety.jpg',
+  'assets/tiles/contact.jpg',
+  'assets/tiles/web.jpg',
   'assets/icon-192.png',
   'assets/icon-512.png',
   'assets/icon-maskable-512.png',
