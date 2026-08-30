@@ -296,6 +296,9 @@
   /* Tauchplatz-Karten: Foto oben, Aktionen unten; Desktop zweispaltig */
   .spots-facts{font-family:var(--font-mono);color:#4A5A75;font-size:12px;margin:-8px 0 14px}
   .spot-photo{aspect-ratio:16/9;border-radius:8px;background:var(--navy) center/cover no-repeat;margin-bottom:10px}
+  /* Luftaufnahme + Unterwasserfoto nebeneinander (wie auf der Website) */
+  .spot-photos{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+  .spot-photos .spot-photo{aspect-ratio:3/2;margin-bottom:0}
 
   /* Ausbildung: Kurs-Gruppen als Karten, Kurse als Zeilen mit Preis rechts */
   .training-list{display:grid;gap:12px;margin-bottom:12px}
