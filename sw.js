@@ -11,7 +11,6 @@ const SHELL = [
   'js/app.js',
   'js/i18n.js',
   'assets/logo.png',
-  'assets/header.jpg',
   'assets/header-mobile.jpg',
   'assets/roboto-slab-700.woff2',
   'assets/tiles/editor.jpg',
