@@ -254,6 +254,8 @@
   .tile .chev{flex:none;font-size:30px;line-height:1;color:var(--white);opacity:.9}
   .tile.t-editor{background-image:url("../assets/tiles/editor.jpg")}
   .tile.t-spots{background-image:url("../assets/tiles/spots.jpg")}
+  .tile.t-training{background-image:url("../assets/tiles/training.jpg")}
+  .tile.t-prices{background-image:url("../assets/tiles/prices.jpg")}
   .tile.t-pack{background-image:url("../assets/tiles/pack.jpg")}
   .tile.t-safety{background-image:url("../assets/tiles/safety.jpg")}
   .tile.t-contact{background-image:url("../assets/tiles/contact.jpg");background-position:center 35%}
@@ -294,6 +296,31 @@
   /* Tauchplatz-Karten: Foto oben, Aktionen unten; Desktop zweispaltig */
   .spots-facts{font-family:var(--font-mono);color:#4A5A75;font-size:12px;margin:-8px 0 14px}
   .spot-photo{aspect-ratio:16/9;border-radius:8px;background:var(--navy) center/cover no-repeat;margin-bottom:10px}
+
+  /* Ausbildung: Kurs-Gruppen als Karten, Kurse als Zeilen mit Preis rechts */
+  .training-list{display:grid;gap:12px;margin-bottom:12px}
+  .course{padding:10px 0 2px}
+  .course+.course{border-top:1px solid var(--line)}
+  .course-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  .course h3{font-family:var(--font-display);font-weight:700;color:var(--navy);font-size:16px;margin-bottom:2px}
+  .course-price{font-family:var(--font-mono);color:var(--red-deep);font-weight:700;font-size:13px;white-space:nowrap}
+  .course p{margin-bottom:8px;max-width:640px}
+  .course .spot-meta{margin-bottom:4px}
+
+  /* Preise: Tabellen wie auf mero-diving.com/tauchen, mobil horizontal wischbar */
+  .price-scroll{overflow-x:auto}
+  .price-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:8px}
+  .price-table th{font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#4A5A75;text-align:right;padding:6px 8px;border-bottom:2px solid var(--gold);vertical-align:bottom}
+  .price-table th:first-child,.price-table td:first-child{text-align:left;padding-left:0}
+  .price-table td{padding:8px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+  .price-table td:not(:first-child){font-family:var(--font-mono);color:var(--navy);font-weight:700}
+  .price-table tr:last-child td{border-bottom:none}
+
+  /* Unterwasserwelt-Galerie: quadratische Fotos mit Namen */
+  .fauna-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:4px}
+  .fauna-item{margin:0}
+  .fauna-item img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:8px;display:block}
+  .fauna-item figcaption{font-family:var(--font-mono);font-size:10.5px;color:#4A5A75;margin-top:4px;text-align:center}
   .spot-actions{display:flex;gap:8px;flex-wrap:wrap}
   @media(min-width:700px){.spots-list{grid-template-columns:1fr 1fr}}
   .page-intro a{color:var(--navy);font-weight:700}

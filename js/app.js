@@ -1,5 +1,5 @@
 const $ = id => document.getElementById(id);
-const APP_VERSION = 'v5.8';
+const APP_VERSION = 'v6.0';
 const stage=$('stage'), wrap=$('wrap'), hint=$('hint'), fileIn=$('file');
 const out=$('out'), orig=$('orig');
 const ids=['red','wb','dehaze','bright','sat','sharp'];
@@ -339,6 +339,9 @@ window.addEventListener('load', () => window.scrollTo(0, 0));
 // Sprachwechsel: von i18n.js ausgelöst - dynamische Texte nachziehen
 document.addEventListener('langchange', () => {
   renderSpots();
+  renderTraining();
+  renderPrices();
+  renderFauna();
   renderPacking();
   if (!fullImg) $('meta').textContent = APP_VERSION + ' · ' + t('meta.empty');
   if (!previewData) $('verdict-text').textContent = t('check.initial');
@@ -355,7 +358,7 @@ document.addEventListener('langchange', () => {
 
 // ---------- Navigation: Startseite / MeroColor / Tauchplätze / Kontakt ----------
 // Hash-Routing, damit die Zurück-Taste (Browser & Android) funktioniert
-const VIEW_IDS=['home','editor','spots','packing','safety','contact'];
+const VIEW_IDS=['home','editor','spots','training','prices','packing','safety','contact'];
 function route(){
   let v=(location.hash||'').replace('#','');
   if(!VIEW_IDS.includes(v)) v='home';
@@ -401,8 +404,51 @@ $('spots-list').addEventListener('click',e=>{
   if(b){ applyPreset(b.dataset.site); location.hash='#editor'; }
 });
 
+// Ausbildungs-Seite aus den i18n-Daten aufbauen (Quelle: mero-diving.com/tauchkurse)
+const COURSE_GROUPS=[
+  ['crs.g.start',['schnupper']],
+  ['crs.g.kids',['kids','grund','jowd']],
+  ['crs.g.beginner',['owd']],
+  ['crs.g.adv',['aowd','deep','navi','nitrox','rescue','night','buoy','scooter']],
+];
+function renderTraining(){
+  $('training-list').innerHTML=COURSE_GROUPS.map(([g,keys])=>
+    `<div class="card"><h2>${t(g)}</h2>`+keys.map(k=>
+      `<div class="course"><div class="course-head"><h3>${t('crs.'+k)}</h3><span class="course-price">${t('crs.'+k+'.p')}</span></div>`+
+      `<p class="spot-meta">${t('crs.'+k+'.m')}</p><p>${t('crs.'+k+'.d')}</p></div>`
+    ).join('')+`</div>`
+  ).join('');
+}
+renderTraining();
+
+// Preise (Quelle: mero-diving.com/tauchen): Zahlen sprachunabhängig, Labels aus i18n
+const PRICE_ROWS=[['r1',39,55,27],['r5',190,270,130],['r10',370,530,250],['r15',540,780,360]];
+const INS_ROWS=[['day',9],['week',25],['month',40],['year',55]];
+function renderPrices(){
+  const eur=v=>v+' €';
+  $('prices-tables').innerHTML=
+    `<div class="card"><h2>${t('prc.dives.h')}</h2><div class="price-scroll"><table class="price-table"><thead><tr>`+
+    `<th>${t('prc.col.pack')}</th><th>${t('prc.col.std')}</th><th>${t('prc.col.lux')}</th><th>${t('prc.col.gear')}</th></tr></thead><tbody>`+
+    PRICE_ROWS.map(([k,a,b,c])=>`<tr><td>${t('prc.'+k)}</td><td>${eur(a)}</td><td>${eur(b)}</td><td>${eur(c)}</td></tr>`).join('')+
+    `</tbody></table></div><p class="tiny">${t('prc.note1')}</p><p class="tiny">${t('prc.note2')}</p></div>`+
+    `<div class="card"><h2>${t('prc.ins.h')}</h2><table class="price-table"><tbody>`+
+    INS_ROWS.map(([k,v])=>`<tr><td>${t('prc.ins.'+k)}</td><td>${eur(v)}</td></tr>`).join('')+
+    `</tbody></table><p class="tiny">${t('prc.ins.note')}</p></div>`;
+}
+renderPrices();
+
+// Unterwasserwelt-Galerie (Fotos: mero-diving.com, Slider "Entdecke unsere Unterwasserwelt")
+const FAUNA_KEYS=['mero','oktopus','sepia','fadenschnecke','barrakudas','baerenkrebs','drachenkopf'];
+function renderFauna(){
+  $('fauna-grid').innerHTML=FAUNA_KEYS.map(k=>
+    `<figure class="fauna-item"><img src="assets/fauna/${k}.jpg" width="360" height="360" loading="lazy" alt="${t('fauna.'+k)}">`+
+    `<figcaption>${t('fauna.'+k)}</figcaption></figure>`
+  ).join('');
+}
+renderFauna();
+
 // Packliste: Haken bleiben lokal gespeichert (localStorage), pro Eintrag ein Schlüssel
-const PACK_KEYS=['brevet','attest','swim','sun','water','mask','fins','suit','computer','camera'];
+const PACK_KEYS=['brevet','attest','insurance','swim','sun','water','mask','fins','suit','computer','camera'];
 function packState(){ try{return JSON.parse(localStorage.getItem('mero-packing')||'{}')}catch(e){return {}} }
 function renderPacking(){
   const s=packState();

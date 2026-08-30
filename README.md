@@ -1,13 +1,15 @@
 # Mero Diving App
 
-Die App der Tauchbasis Mero Diving (Cala Ratjada). Startseite mit vier Bereichen:
+Die App der Tauchbasis Mero Diving (Cala Ratjada). Startseite mit diesen Bereichen:
 
 - **MeroColor – Bildoptimierer**: Tauchfotos direkt im Browser aufbereiten – Rotkanal zurückholen, Weißabgleich, Trübung entfernen, Schärfen, Mero-Branding. Die Verarbeitung läuft komplett lokal, es werden keine Fotos hochgeladen.
 - **Tauchplätze**: die Spots rund um Cala Ratjada, mit Absprung in den Bildoptimierer (Preset wird passend gesetzt).
+- **Ausbildung**: die Kurse vom Schnuppertauchen bis zu den Specialties, mit Preisen und Daten von mero-diving.com/tauchkurse.
+- **Preise**: Tauchgänge (Standard/De Luxe), Leihausrüstung und Tauchversicherung – die Tabelle von mero-diving.com/tauchen.
 - **Kontakt**: Adresse, Google-Maps- und Website-Link.
 - **mero-diving.com**: externer Link zur Website (Kurse, Preise, Buchung).
 
-Die Navigation läuft über URL-Hashes (`#home`, `#editor`, `#spots`, `#contact`), damit die Zurück-Taste im Browser und in der installierten App funktioniert.
+Die Navigation läuft über URL-Hashes (`#home`, `#editor`, `#spots`, `#training`, `#contact`), damit die Zurück-Taste im Browser und in der installierten App funktioniert.
 
 ## Struktur
 
@@ -21,6 +23,7 @@ assets/header-mobile.jpg  Logofreies Hero-Headerbild
 assets/icon-*.png     App-Icons für PWA-Installation (Manifest + iOS)
 assets/tiles/*.jpg    Banner-Fotos der Startseiten-Kacheln
 assets/spots/*.jpg    Fotos der Tauchplatz-Karten (echte Fotos von mero-diving.com/tauchen, 880×495)
+assets/fauna/*.jpg    Unterwasserwelt-Galerie (Tierfotos von mero-diving.com, 360×360)
 ```
 
 ## PWA

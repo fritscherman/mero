@@ -35,6 +35,8 @@
   <nav class="tiles">
     <a class="tile t-editor" href="#editor"><span class="ic">📷</span><div class="tx"><h3 id="tile-editor-t">MeroColor – Bildoptimierer</h3><p id="tile-editor-s">Tauchfotos im Browser aufbereiten – optimiert für unsere Tauchplätze.</p></div><span class="chev">›</span></a>
     <a class="tile t-spots" href="#spots"><span class="ic">🤿</span><div class="tx"><h3 id="tile-spots-t">Tauchplätze</h3><p id="tile-spots-s">Unsere Spots rund um Cala Ratjada.</p></div><span class="chev">›</span></a>
+    <a class="tile t-training" href="#training"><span class="ic">🎓</span><div class="tx"><h3 id="tile-training-t">Ausbildung</h3><p id="tile-training-s">Vom Schnuppertauchen bis zum Specialty – unsere Kurse.</p></div><span class="chev">›</span></a>
+    <a class="tile t-prices" href="#prices"><span class="ic">💶</span><div class="tx"><h3 id="tile-prices-t">Preise</h3><p id="tile-prices-s">Tauchgänge, Pakete, Ausrüstung und Versicherung.</p></div><span class="chev">›</span></a>
     <a class="tile t-pack" href="#packing"><span class="ic">🎒</span><div class="tx"><h3 id="tile-pack-t">Packliste</h3><p id="tile-pack-s">Zum Abhaken vor dem Tauchgang – merkt sich deine Haken.</p></div><span class="chev">›</span></a>
     <a class="tile t-contact" href="#contact"><span class="ic">📍</span><div class="tx"><h3 id="tile-contact-t">Kontakt &amp; Anfahrt</h3><p id="tile-contact-s">Adresse der Tauchbasis, Karte und Website.</p></div><span class="chev">›</span></a>
     <a class="tile t-safety" href="#safety"><span class="ic">🚨</span><div class="tx"><h3 id="tile-safety-t">Notfall &amp; Sicherheit</h3><p id="tile-safety-s">Notrufnummern zum Antippen – auch offline.</p></div><span class="chev">›</span></a>
@@ -46,8 +48,36 @@
   <a class="back" href="#home">← Startseite</a>
   <h2 class="page-h" id="spots-h">Tauchplätze Mero Diving</h2>
   <p class="page-intro" id="spots-intro">Vom Hausriff in der Cala Lliteras bis zur Kathedrale – hier tauchen wir. Details und Buchung auf mero-diving.com.</p>
-  <p class="spots-facts" id="spots-facts">Treffpunkt täglich 09:15 &amp; 14:15 Uhr · Bucht bis 10–18 m · Boot bis 30 m (je nach Brevet) · Bootsplätze in 5–15 Min.</p>
+  <p class="spots-facts" id="spots-facts">Treffpunkt täglich 09:15 &amp; 14:15 Uhr · Erster Tauchgang immer aus der Bucht · Bucht bis 10–18 m · Boot bis 30 m (je nach Brevet) · Bootsplätze in 5–15 Min.</p>
   <div class="spots-list" id="spots-list"></div>
+  <div class="card">
+    <h2 id="fauna-h">Unsere Unterwasserwelt</h2>
+    <p id="fauna-intro">Das Meeresschutzgebiet Llevant vor Cala Ratjada schützt seltene Meereslebewesen und wertvolle Lebensräume – einzigartige Artenvielfalt in kristallklarem Wasser. Diesen Tieren begegnest du bei uns:</p>
+    <div class="fauna-grid" id="fauna-grid"></div>
+  </div>
+</section>
+
+<section id="view-training" class="page" hidden>
+  <a class="back" href="#home">← Startseite</a>
+  <h2 class="page-h" id="training-h">Ausbildung</h2>
+  <p class="page-intro" id="training-intro">Vom ersten Flossenschlag bis zum Profi – wir bilden dich aus (i.a.c. · SSI · CMAS · PADI). Voranmeldung empfohlen: telefonisch, per WhatsApp oder Mail.</p>
+  <div class="training-list" id="training-list"></div>
+  <div class="contact-actions">
+    <a class="btn primary" href="https://mero-diving.com/tauchkurse/" target="_blank" rel="noopener" id="training-web">Alle Kurse auf mero-diving.com</a>
+    <a class="btn ghost" href="https://mero-diving.com/reservierung/" target="_blank" rel="noopener" id="training-book">Kurs reservieren</a>
+  </div>
+  <p class="tiny" id="training-voucher">🎁 Schnuppertauchen gibt es auch als Gutschein – ein beliebtes Geschenk. Erhältlich per Mail, WhatsApp oder direkt an der Basis.</p>
+</section>
+
+<section id="view-prices" class="page" hidden>
+  <a class="back" href="#home">← Startseite</a>
+  <h2 class="page-h" id="prices-h">Preise</h2>
+  <p class="page-intro" id="prices-intro">Tauchgänge einzeln oder im Paket – alle Preise inklusive 10-l-Flasche Pressluft, Blei und Guide/Tauchlehrer. Reservierung per Telefon, WhatsApp oder Mail.</p>
+  <div class="training-list" id="prices-tables"></div>
+  <div class="contact-actions">
+    <a class="btn primary" href="https://mero-diving.com/reservierung/" target="_blank" rel="noopener" id="prices-book">Jetzt reservieren</a>
+    <a class="btn ghost" href="https://mero-diving.com/tauchen/" target="_blank" rel="noopener" id="prices-web">Details auf mero-diving.com</a>
+  </div>
 </section>
 
 <section id="view-contact" class="page" hidden>
@@ -61,6 +91,7 @@
       <a href="tel:+34689448308">📞 +34 689 448 308</a><br>
       <a href="mailto:info@mero-diving.com">✉️ info@mero-diving.com</a>
     </p>
+    <p class="tiny" id="contact-season">Saison: Mai bis Oktober · Reservierung per Telefon, WhatsApp oder Mail.</p>
     <p class="tiny">i.a.c. · SSI · CMAS · PADI</p>
     <div class="contact-actions">
       <a class="btn primary" href="https://www.mero-diving.com" target="_blank" rel="noopener" id="contact-web">Website öffnen</a>
@@ -187,6 +218,7 @@
   <b>MERO DIVING</b> · <span id="footer-base">Tauchbasis in der Cala Lliteras seit 1969</span><br>
   C/ Llebeig 1-3 · 07589 Cala Ratjada · Mallorca · mero-diving.com<br>
   i.a.c. · SSI · CMAS · PADI &nbsp;·&nbsp; <b>Dive with friends</b><br>
+  <a href="https://mero-diving.com/impressum/" target="_blank" rel="noopener" id="footer-imprint">Impressum</a> · <a href="https://mero-diving.com/datenschutz/" target="_blank" rel="noopener" id="footer-privacy">Datenschutz</a><br>
   <span class="mono" id="version"></span>
 </footer>
 
