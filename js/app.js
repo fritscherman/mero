@@ -1,5 +1,5 @@
 const $ = id => document.getElementById(id);
-const APP_VERSION = 'v6.1';
+const APP_VERSION = 'v6.2';
 const stage=$('stage'), wrap=$('wrap'), hint=$('hint'), fileIn=$('file');
 const out=$('out'), orig=$('orig');
 const ids=['red','wb','dehaze','bright','sat','sharp'];
@@ -377,26 +377,20 @@ document.querySelectorAll('.brand h1').forEach(el=>{
 
 // Tauchplatz-Seite aus den i18n-Daten aufbauen (bei Sprachwechsel neu)
 const SITE_KEYS=['lliteras','maria','kkaese','capfreu','gkaese','leuchtturm','loewenkopf','kathedrale'];
-// Geo-Lage: nur echte, benannte Orte verlinken; Grotten-Spots ohne
-// öffentlichen Kartennamen zeigen das Gebiet Cala Ratjada
-const SITE_MAPS={
-  lliteras:'https://maps.google.com/?q=Cala+Lliteras,+Cala+Ratjada',
-  maria:'https://maps.google.com/?q=Cala+Lliteras,+Cala+Ratjada',
-  kkaese:'https://maps.google.com/?q=Reserva+Marina+de+Llevant',
-  capfreu:'https://maps.google.com/?q=Cap+des+Freu,+Capdepera',
-  gkaese:'https://maps.google.com/?q=Port+de+Cala+Ratjada',
-  leuchtturm:'https://maps.google.com/?q=Far+de+Capdepera',
-  loewenkopf:'https://maps.google.com/?q=Cala+Ratjada',
-  kathedrale:'https://maps.google.com/?q=Cala+Ratjada',
-};
+// Diese Spots haben auf mero-diving.com zusätzlich eine Luftaufnahme
+// (assets/spots/<key>-oben.jpg) - sie steht links neben dem Unterwasserfoto
+const SITE_AERIALS=['maria','kkaese','capfreu','gkaese','loewenkopf'];
 function renderSpots(){
-  $('spots-list').innerHTML=SITE_KEYS.map(k=>
-    `<div class="card spot"><div class="spot-photo" style="background-image:url('assets/spots/${k}.jpg')"></div>`+
+  $('spots-list').innerHTML=SITE_KEYS.map(k=>{
+    const photos=SITE_AERIALS.includes(k)
+      ?`<div class="spot-photos"><div class="spot-photo" style="background-image:url('assets/spots/${k}-oben.jpg')"></div>`+
+       `<div class="spot-photo" style="background-image:url('assets/spots/${k}.jpg')"></div></div>`
+      :`<div class="spot-photo" style="background-image:url('assets/spots/${k}.jpg')"></div>`;
+    return `<div class="card spot">${photos}`+
     `<h3>${t('pn.'+k).replace(/&amp;/g,'&')}</h3>`+
     `<p class="spot-meta">${t('p.'+k)}</p><p>${t('site.'+k)}</p>`+
-    `<div class="spot-actions"><button class="btn primary sm" data-site="${k}">${t('spots.edit')}</button>`+
-    `<a class="btn ghost sm" href="${SITE_MAPS[k]}" target="_blank" rel="noopener">📍 ${t('spots.map')}</a></div></div>`
-  ).join('');
+    `<div class="spot-actions"><button class="btn primary sm" data-site="${k}">${t('spots.edit')}</button></div></div>`;
+  }).join('');
 }
 renderSpots();
 $('spots-list').addEventListener('click',e=>{
